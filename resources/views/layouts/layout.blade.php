@@ -77,9 +77,9 @@
 
 
           <div class="b-example-divider b-example-vr"></div>
-          
+
             @yield('content') {{-- renderizamos la vista seleccionada por el usuario --}}
-          
+
         </main>
         @include('layouts.color-select.select-theme')
     </section>
