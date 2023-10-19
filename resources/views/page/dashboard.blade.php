@@ -17,22 +17,6 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Resumen 2</h5>
-                    <p class="card-text">Contenido del resumen 2.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Resumen 3</h5>
-                    <p class="card-text">Contenido del resumen 3.</p>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 @stop
