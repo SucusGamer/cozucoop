@@ -1,5 +1,11 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Procesos\ConductoresController;
+use App\Http\Controllers\Procesos\MovimientosController;
+use App\Http\Controllers\Procesos\ReportesController;
+use App\Http\Controllers\Procesos\SociosController;
+use App\Http\Controllers\Procesos\UsuariosController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +19,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('layouts.layout');
-});
+// Route::get('/', function () {
+//     return view('layouts.layout');
+// });
+
+//creamos una ruta para el dashboard
+Route::resource('/', DashboardController::class)->names('dashboard');
+Route::resource('/conductores', ConductoresController::class)->names('conductores');
+Route::resource('/movimientos', MovimientosController::class)->names('movimientos');
+Route::resource('/reportes', ReportesController::class)->names('reportes');
+Route::resource('/usuarios', UsuariosController::class)->names('usuarios');
+Route::resource('/socios', SociosController::class)->names('socios');
+

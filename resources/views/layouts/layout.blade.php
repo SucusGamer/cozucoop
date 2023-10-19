@@ -28,34 +28,40 @@
             </a>
             <hr>
             <ul class="nav nav-pills flex-column mb-auto">
-              <li class="nav-item">
-                <a href="#" class="nav-link active" aria-current="page">
-                  <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
-                  Home
-                </a>
-              </li>
               <li>
-                <a href="#" class="nav-link text-white">
+                <a href="{{ route('dashboard.index') }}" class="nav-link text-white @if (request()->routeIs('dashboard.index')) active @endif">
                   <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
                   Dashboard
                 </a>
               </li>
-              <li>
-                <a href="#" class="nav-link text-white">
-                  <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-                  Orders
+              <li class="nav-item">
+                <a href="{{ route('socios.index') }}" class="nav-link text-white @if (request()->routeIs('socios.index')) active @endif" aria-current="page">
+                  <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#partners"/></svg>
+                  Socios
                 </a>
               </li>
               <li>
-                <a href="#" class="nav-link text-white">
-                  <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
-                  Productos
+                <a href="{{route('conductores.index')}}" class="nav-link text-white @if (request()->routeIs('conductores.index')) active @endif"">
+                  <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#drivers"/></svg>
+                  Conductores
                 </a>
               </li>
               <li>
-                <a href="#" class="nav-link text-white">
+                <a href="{{route('movimientos.index')}}" class="nav-link text-white @if (request()->routeIs('movimientos.index')) active @endif"">
+                  <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#flow"/></svg>
+                  Movimientos
+                </a>
+              </li>
+              <li>
+                <a href="{{route('usuarios.index')}}" class="nav-link text-white @if (request()->routeIs('usuarios.index')) active @endif">
                   <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
-                  Clientes
+                  Usuarios
+                </a>
+              </li>
+              <li>
+                <a href="{{route('reportes.index')}}" class="nav-link text-white @if (request()->routeIs('reportes.index')) active @endif">
+                  <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#file"/></svg>
+                  Reportes
                 </a>
               </li>
             </ul>
