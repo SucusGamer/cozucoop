@@ -55,7 +55,7 @@
               <li>
                 <a href="#" class="nav-link text-white">
                   <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
-                  Customers
+                  Clientes
                 </a>
               </li>
             </ul>
@@ -77,9 +77,9 @@
 
 
           <div class="b-example-divider b-example-vr"></div>
-          
+
             @yield('content') {{-- renderizamos la vista seleccionada por el usuario --}}
-          
+
         </main>
         @include('layouts.color-select.select-theme')
     </section>
