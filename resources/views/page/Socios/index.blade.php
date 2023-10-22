@@ -16,7 +16,7 @@
     <div class="row">
         <div class="col-12 text-center">
             <h1 class="display-4 mb-4">Gestión de Socios</h1>
-            <a href="#" class="btn btn-primary">Crear Nuevo Socio</a>
+            <a href="#" class="btn btn-primary2">Crear Nuevo Socio</a>
         </div>
     </div>
 
@@ -27,33 +27,36 @@
                     <thead class="bg-primary text-white">
                         <tr>
                             <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Email</th>
-                            <th>Fecha de Registro</th>
-                            <th>Acciones</th>
+                            <th>NOMBRE</th>
+                            <th>TELEFONO</th>
+                            <th>USUARIO</th>
+                            <th>FECHA DE REGISTRO</th>
+                            <th>ACCIONES</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>1</td>
                             <td>John Doe</td>
-                            <td>john.doe@example.com</td>
+                            <td>1234567890</td>
+                            <td>S001</td>
                             <td>2023-10-19</td>
                             <td>
-                                <a href="#" class="btn btn-info btn-sm">Ver Detalles</a>
-                                <a href="#" class="btn btn-warning btn-sm">Editar</a>
-                                <a href="#" class="btn btn-danger btn-sm">Eliminar</a>
+                                <a href="#" class="btn btn-info2 btn-sm">Ver Detalles</a>
+                                <a href="#" class="btn btn-warning2 btn-sm">Editar</a>
+                                <a href="#" class="btn btn-danger2 btn-sm">Eliminar</a>
                             </td>
                         </tr>
                         <tr>
                             <td>2</td>
                             <td>Jane Smith</td>
-                            <td>jane.smith@example.com</td>
+                            <td>1234567890</td>
+                            <td>S002</td>
                             <td>2023-10-20</td>
                             <td>
-                                <a href="#" class="btn btn-info btn-sm">Ver Detalles</a>
-                                <a href="#" class="btn btn-warning btn-sm">Editar</a>
-                                <a href="#" class="btn btn-danger btn-sm">Eliminar</a>
+                                <a href="#" class="btn btn-info2 btn-sm">Ver Detalles</a>
+                                <a href="#" class="btn btn-warning2 btn-sm">Editar</a>
+                                <a href="#" class="btn btn-danger2 btn-sm">Eliminar</a>
                             </td>
                         </tr>
                         <!-- Agrega más filas según sea necesario -->
@@ -74,6 +77,6 @@
             });
         });
     </script>
-    
+
 @endpush
 @stop
