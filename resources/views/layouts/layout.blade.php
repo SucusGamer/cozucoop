@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Cozucoop</title>
+    <title>@yield('title') - {{ config('app.name', 'COZUCOOP') }} </title>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/Botonesnuevos.css') }}">
 
+
+    @yield('extra-css')
     <!-- Theme CSS -->
     <script src="{{ asset('js/color-modes.js') }}"></script>
 
