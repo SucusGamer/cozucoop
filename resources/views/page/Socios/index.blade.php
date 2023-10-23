@@ -1,5 +1,8 @@
 @extends('layouts.layout')
+@section('title', 'Socios')
 
+@section('extra-js')
+@endsection
 @section('content')
 <div class="container my-5">
     <div class="row">
@@ -16,7 +19,7 @@
     <div class="row">
         <div class="col-12 text-center">
             <h1 class="display-4 mb-4">Gestión de Socios</h1>
-            <a href="#" class="btn btn-primary2">Crear Nuevo Socio</a>
+            <a href="{{ route('socios.create')}}" class="btn btn-primary2">Crear Nuevo Socio</a>
         </div>
     </div>
 
@@ -28,6 +31,7 @@
                         <tr>
                             <th>ID</th>
                             <th>NOMBRE</th>
+                            <th>APELLIDOS</th>
                             <th>TELEFONO</th>
                             <th>USUARIO</th>
                             <th>FECHA DE REGISTRO</th>
@@ -35,31 +39,22 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($socios as $id => $socio)
                         <tr>
-                            <td>1</td>
-                            <td>John Doe</td>
-                            <td>1234567890</td>
-                            <td>S001</td>
-                            <td>2023-10-19</td>
-                            <td>
+                            <td>{{ $socio['id'] }}</td>
+                            <td>{{ $socio['nombre'] }}</td>
+                            <td>{{ $socio['apellidos'] }}</td>
+                            <td>{{ $socio['telefono'] }}</td>
+                            <td>{{ $socio['usuario'] }}</td>
+                            <td>{{ Carbon\Carbon::parse($socio['created_at'])->format('d/m/Y') }}</td>
+                            <td></td>
+                            {{-- <td>
                                 <a href="#" class="btn btn-info2 btn-sm">Ver Detalles</a>
                                 <a href="#" class="btn btn-warning2 btn-sm">Editar</a>
                                 <a href="#" class="btn btn-danger2 btn-sm">Eliminar</a>
-                            </td>
+                            </td> --}}
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Jane Smith</td>
-                            <td>1234567890</td>
-                            <td>S002</td>
-                            <td>2023-10-20</td>
-                            <td>
-                                <a href="#" class="btn btn-info2 btn-sm">Ver Detalles</a>
-                                <a href="#" class="btn btn-warning2 btn-sm">Editar</a>
-                                <a href="#" class="btn btn-danger2 btn-sm">Eliminar</a>
-                            </td>
-                        </tr>
-                        <!-- Agrega más filas según sea necesario -->
+                        @endforeach
                     </tbody>
                 </table>
             </div>

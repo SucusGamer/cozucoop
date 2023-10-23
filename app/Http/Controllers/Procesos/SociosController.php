@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Procesos;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Kreait\Firebase\Factory;
 
 class SociosController extends Controller
 {
@@ -12,9 +13,21 @@ class SociosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function connect()
+    {
+        $firebase = (new Factory)
+            ->withServiceAccount(base_path(env('FIREBASE_CREDETIALS')))
+            ->withDatabaseUri(env('FIREBASE_DATABASE_URL'));
+
+        return $firebase->createDatabase();
+    }
     public function index()
     {
-        return view('page.socios.index');
+        $socios = $this->connect()->getReference('socios')->getSnapshot()->getValue();
+        return view('page.socios.index')->with([
+            'socios' => $socios
+        ]);
     }
 
     /**
@@ -24,7 +37,7 @@ class SociosController extends Controller
      */
     public function create()
     {
-        //
+        return view('page.socios.create');
     }
 
     /**
@@ -35,7 +48,22 @@ class SociosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->connect()->getReference('socios')->push(
+            [
+                'id' => $this->connect()->getReference('socios')->getSnapshot()->numChildren() + 1,
+                'nombre' => $request->nombre,
+                'apellidos' => $request->apellidos,
+                'usuario' => $request->usuario,
+                'contrasena' => $request->contrasena,
+                'telefono' => $request->telefono,
+                'created_at' => date('d-m-Y H:i:s'),
+                'updated_at' => date('d-m-Y H:i:s'),
+            ]
+        );
+
+        // dd($request->except(['_token']));
+
+        return redirect()->route('socios.index')->with('success', 'Socio creado correctamente');
     }
 
     /**
