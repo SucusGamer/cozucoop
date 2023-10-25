@@ -61,6 +61,7 @@
         </div>
     </div>
 </div>
+@include('include.mensaje')
 @push('script')
     <script>
         $(document).ready(function() {
