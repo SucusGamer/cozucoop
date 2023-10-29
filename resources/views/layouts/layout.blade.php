@@ -40,6 +40,12 @@
                   Dashboard
                 </a>
               </li>
+              <li>
+                <a href="{{route('movimientos.index')}}" class="nav-link text-white @if (request()->routeIs('movimientos.index')) active @endif"">
+                  <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#flow"/></svg>
+                  Mototaxis
+                </a>
+              </li>
               <li class="nav-item">
                 <a href="{{ route('socios.index') }}" class="nav-link text-white @if (request()->routeIs('socios.index')) active @endif" aria-current="page">
                   <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#partners"/></svg>
@@ -52,18 +58,12 @@
                   Conductores
                 </a>
               </li>
-              <li>
-                <a href="{{route('movimientos.index')}}" class="nav-link text-white @if (request()->routeIs('movimientos.index')) active @endif"">
-                  <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#flow"/></svg>
-                  Movimientos
-                </a>
-              </li>
-              <li>
+              {{--<li>
                 <a href="{{route('usuarios.index')}}" class="nav-link text-white @if (request()->routeIs('usuarios.index')) active @endif">
                   <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
                   Usuarios
                 </a>
-              </li>
+              </li>--}}
               <li>
                 <a href="{{route('reportes.index')}}" class="nav-link text-white @if (request()->routeIs('reportes.index')) active @endif">
                   <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#file"/></svg>
