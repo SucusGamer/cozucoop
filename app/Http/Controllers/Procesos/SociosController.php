@@ -63,7 +63,7 @@ class SociosController extends Controller
 
         // dd($request->except(['_token']));
 
-        return redirect()->route('socios.index')->with('success', 'Socio creado correctamente');
+        return redirect()->route('socios.index')->with('message', 'Socio creado correctamente')->with('status', 'success');
     }
 
     /**
