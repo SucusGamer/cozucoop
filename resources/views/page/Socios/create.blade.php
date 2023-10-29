@@ -9,8 +9,8 @@
   <div class="row">
     <div class="col-md-12">
       <div class="row">
-        <div class="col">
-          <h1 class="h3">Crear Socio</h1>
+        <div class="col text-center">
+          <h1 class="h2">Crear Socio</h1>
         </div>
       </div>
       <hr>
