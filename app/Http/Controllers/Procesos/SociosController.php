@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Procesos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Kreait\Firebase\Factory;
+use Kreait\Laravel\Firebase\Facades\Firebase;
+use Kreait\Firebase\Auth;
 
 class SociosController extends Controller
 {
@@ -16,15 +18,61 @@ class SociosController extends Controller
 
     public function connect()
     {
-        $firebase = (new Factory)
-            ->withServiceAccount(base_path(env('FIREBASE_CREDETIALS')))
-            ->withDatabaseUri(env('FIREBASE_DATABASE_URL'));
+        $factory = (new Factory)
+        ->withServiceAccount(base_path(env('FIREBASE_CREDENTIALS')));
+        $firestore = $factory->createFirestore();
+        $database = $firestore->database();
 
-        return $firebase->createDatabase();
+        return $database;
     }
+    public function auth()
+    {
+        $factory = (new Factory)
+            ->withServiceAccount(base_path(env('FIREBASE_CREDENTIALS')));
+        $auth = $factory->createAuth();
+
+        return $auth;
+    }
+    public function getFirebaseUsers()
+    {
+        $auth = $this->auth();
+
+        try {
+            $users = $auth->listUsers($defaultMaxResults = 1000, $defaultBatchSize = 1000);
+            return iterator_to_array($users);
+        } catch (\Exception $e) {
+            // Maneja cualquier error que pueda ocurrir al recuperar los usuarios
+            return [];
+        }
+    }
+
     public function index()
     {
-        $socios = $this->connect()->getReference('socios')->getSnapshot()->getValue();
+
+        $socios = $this->connect()->collection('Socios')->documents();
+        //sacamos lo que necesitamos de socios
+        $socios = $socios->rows();
+        $socios = array_map(function ($socio) {
+            return $socio->data();
+        }, $socios);
+        // dd($socios);
+
+        //ahora buscamos en auth
+        $usuarios = $this->getFirebaseUsers();
+        // dd($usuarios);
+        
+        //ahora sacamos sus datos y los ponemos en un array
+        $usuariosArray = [];
+        foreach ($usuarios as $usuario) {
+            $usuariosArray[$usuario->uid] = $usuario->displayName;
+        }
+
+        // dd($usuariosArray);
+
+
+        //
+        // $socios = $this->connect()->getReference('socios')->getSnapshot()->getValue();
+
         return view('page.socios.index')->with([
             'socios' => $socios
         ]);
@@ -48,18 +96,7 @@ class SociosController extends Controller
      */
     public function store(Request $request)
     {
-        $this->connect()->getReference('socios')->push(
-            [
-                'id' => $this->connect()->getReference('socios')->getSnapshot()->numChildren() + 1,
-                'nombre' => $request->nombre,
-                'apellidos' => $request->apellidos,
-                'usuario' => $request->usuario,
-                'contrasena' => $request->contrasena,
-                'telefono' => $request->telefono,
-                'created_at' => date('d-m-Y H:i:s'),
-                'updated_at' => date('d-m-Y H:i:s'),
-            ]
-        );
+
 
         // dd($request->except(['_token']));
 
