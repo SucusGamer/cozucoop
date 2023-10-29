@@ -15,6 +15,9 @@
     <!-- Theme CSS -->
     <script src="{{ asset('js/color-modes.js') }}"></script>
 
+    {{-- Sweetalert --}}
+    <script src="{{ asset('js/sweetalert.min.js') }}"></script>
+
 
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
 
