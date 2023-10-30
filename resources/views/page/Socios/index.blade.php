@@ -39,20 +39,28 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($socios as $id => $socio)
+                            @foreach ($socios as $id => $socio) 
                                 <tr>
-                                    <td>{{ $socio['id'] }}</td>
-                                    <td>{{ $socio['nombre'] }}</td>
-                                    <td>{{ $socio['apellidos'] }}</td>
-                                    <td>{{ $socio['telefono'] }}</td>
-                                    <td>{{ $socio['usuario'] }}</td>
-                                    <td>{{ Carbon\Carbon::parse($socio['created_at'])->format('d/m/Y') }}</td>
-                                    <td></td>
+                                    <td>{{ $socio['IDSocio'] }}</td>
+                                    <td>{{ $socio['Nombre'] }}</td>
+                                    <td>{{ $socio['Apellidos'] }}</td>
+                                    <td>{{ $socio['Telefono'] }}</td>
+                                    <td>{{ $socio['Usuario'] }}</td> 
+                                    <td>{{ $socio['Activo'] ? 'Si' : 'No' }}</td>
+                                    <td>
+                                        <a href="{{ route('socios.edit', ['socio' => $id]) }}" class="btn btn-warning2 btn-sm">Editar</a>
+                                        {{-- <a href="{{ route('socios.show', $socio['IDSocio']) }}" class="btn btn-info2 btn-sm">Ver</a> --}}
+                                        {{-- <form action="{{ route('socios.destroy', $socio['IDSocio']) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger2 btn-sm" onclick="return confirm('¿Estás seguro de eliminar este registro?')">Eliminar</button>
+                                        </form> --}}
+                                    </td>
                                     {{-- <td>
-                                <a href="#" class="btn btn-info2 btn-sm">Ver Detalles</a>
-                                <a href="#" class="btn btn-warning2 btn-sm">Editar</a>
-                                <a href="#" class="btn btn-danger2 btn-sm">Eliminar</a>
-                            </td> --}}
+                                        <a href="#" class="btn btn-info2 btn-sm">Ver Detalles</a>
+                                        <a href="#" class="btn btn-warning2 btn-sm">Editar</a>
+                                        <a href="#" class="btn btn-danger2 btn-sm">Eliminar</a>
+                                    </td> --}}
                                 </tr>
                             @endforeach
                         </tbody>
@@ -61,6 +69,7 @@
             </div>
         </div>
     </div>
+    @include('include.mensaje')
     @push('script')
         <script>
             $(document).ready(function() {
