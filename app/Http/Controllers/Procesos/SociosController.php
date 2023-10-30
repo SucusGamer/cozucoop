@@ -51,11 +51,10 @@ class SociosController extends Controller
 
         $socios = $this->connect()->collection('Socios')->documents();
         //sacamos lo que necesitamos de socios
-        $socios = $socios->rows();
-        $socios = array_map(function ($socio) {
-            return $socio->data();
-        }, $socios);
-        // dd($socios);
+        foreach ($socios as $socio) {
+            $sociosArray[$socio->id()] = $socio->data();
+        }
+        // dd($sociosArray);
 
         //ahora buscamos en auth
         $usuarios = $this->getFirebaseUsers();
@@ -74,7 +73,7 @@ class SociosController extends Controller
         // $socios = $this->connect()->getReference('socios')->getSnapshot()->getValue();
 
         return view('page.socios.index')->with([
-            'socios' => $socios
+            'socios' => $sociosArray,
         ]);
     }
 
@@ -85,7 +84,10 @@ class SociosController extends Controller
      */
     public function create()
     {
-        return view('page.socios.create');
+        $usuarios = $this->selectUsuarios();
+        return view('page.socios.create')->with([
+            'usuarios' => $usuarios
+        ]);
     }
 
     /**
@@ -96,9 +98,16 @@ class SociosController extends Controller
      */
     public function store(Request $request)
     {
-
-
-        // dd($request->except(['_token']));
+        // dd(request()->all());
+        $socios = $this->connect()->collection('Socios')->newDocument();
+        $socios->set([
+            'Nombre' => $request->nombre,
+            'Apellidos' => $request->apellidos,
+            'Telefono' => $request->telefono,
+            'Usuario' => $request->nombreUsuario,
+            'IDSocio' => $request->usuario,
+            'Activo' => true
+        ]);
 
         return redirect()->route('socios.index')->with('message', 'Socio creado correctamente')->with('status', 'success');
     }
@@ -122,7 +131,15 @@ class SociosController extends Controller
      */
     public function edit($id)
     {
-        //
+        // dd($id);
+        $socio = $this->connect()->collection('Socios')->document($id)->snapshot()->data();
+        // dd($socio);
+        $usuarios = $this->selectUsuarios();
+        return view('page.socios.edit')->with([
+            'socio' => $socio,
+            'usuarios' => $usuarios,
+            'id' => $id
+        ]);
     }
 
     /**
@@ -134,7 +151,18 @@ class SociosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // dd(request()->all());
+        $socios = $this->connect()->collection('Socios')->document($id);
+        $socios->set([
+            'Nombre' => $request->nombre,
+            'Apellidos' => $request->apellidos,
+            'Telefono' => $request->telefono,
+            'Usuario' => $request->nombreUsuario,
+            'IDSocio' => $request->usuario,
+            'Activo' => true
+        ]);
+
+        return redirect()->route('socios.index')->with('message', 'Socio actualizado correctamente')->with('status', 'success');
     }
 
     /**
@@ -146,5 +174,16 @@ class SociosController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    function selectUsuarios()
+    {
+        $usuarios = $this->getFirebaseUsers();
+        // dd($usuarios);
+        $usuariosArray = [];
+        foreach ($usuarios as $usuario) {
+            $usuariosArray[$usuario->uid] = $usuario->displayName;
+        }
+        return $usuariosArray;
     }
 }
