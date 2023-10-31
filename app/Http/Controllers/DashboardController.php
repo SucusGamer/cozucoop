@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Kreait\Firebase\Factory;
 
 class DashboardController extends Controller
 {
@@ -11,10 +12,38 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function connect()
+    {
+        $factory = (new Factory)
+            ->withServiceAccount(base_path(env('FIREBASE_CREDENTIALS')));
+        $firestore = $factory->createFirestore();
+        $database = $firestore->database();
+
+        return $database;
+    }
     public function index()
     {
-        return view('page.dashboard');
+        // Obtener todos los fallos
+        $fallos = $this->connect()->collection('Fallos')->documents();
+
+        $reportes = $this->connect()->collection('Reportes')->documents();
+
+        // Obtener la información de usuarios
+        $usuarios = $this->selectUsuarios();
+
+        // Obtener fallos activos
+        $fallosActivos = $this->getFallosActivos($fallos, $usuarios);
+        $reportesActivos = $this->getReportes($reportes, $usuarios);
+        // dd($reportesActivos);
+
+        return view('page.dashboard')->with([
+            'fallosActivos' => $fallosActivos,
+            'reportes' => $reportesActivos
+        ]);
     }
+
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -81,4 +110,43 @@ class DashboardController extends Controller
     {
         //
     }
+    function getFallosActivos($fallos, $usuarios)
+    {
+        $fallosActivos = [];
+        foreach ($fallos as $fallo) {
+            if ($fallo->data()['Activo']) {
+                $falloData = $fallo->data();
+                $falloData['NombreSocio'] = $usuarios[$falloData['IDSocio']]['Usuario'];
+                $falloData['NombreConductor'] = $usuarios[$falloData['IDConductor']]['Usuario'];
+                $fallosActivos[$fallo->id()] = $falloData;
+            }
+        }
+        return $fallosActivos;
+    }
+
+    public function getReportes($fallos, $usuarios)
+    {
+        $reportesArray = [];
+        foreach ($fallos as $fallo) {
+            $falloData = $fallo->data();
+            $falloData['NombreSocio'] = $usuarios[$falloData['IDSocio']]['Usuario'];
+            $falloData['NombreConductor'] = $usuarios[$falloData['IDConductor']]['Usuario'];
+            $reportesArray[$fallo->id()] = $falloData;
+        }
+        return $reportesArray;
+    }
+
+
+    function selectUsuarios()
+    {
+        $usuarios = $this->connect()->collection('Usuarios')->documents();
+        $usuariosArray = [];
+        foreach ($usuarios as $usuario) {
+            $usuariosArray[$usuario['IDUsuario']] = [
+                'Usuario' => $usuario['Usuario']
+            ];
+        }
+        return $usuariosArray;
+    }
+
 }
