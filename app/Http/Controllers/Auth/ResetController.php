@@ -29,7 +29,7 @@ class ResetController extends Controller
     $uid = Session::get('uid');
     $verify = app('firebase.auth')->getUser($uid)->emailVerified;
     if ($verify == 1) {
-      return redirect()->route('home');
+      return redirect()->route('perfil.index');
     } else {
       try {
         $email = app('firebase.auth')->getUser($uid)->email;
