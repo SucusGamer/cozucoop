@@ -20,6 +20,8 @@
 
 
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
+  <!-- Fontawesome icons -->
+  <script src="{{ asset('js/fontawesome/js/all.js') }}"></script>
 
 </head>
 <body>
@@ -58,12 +60,12 @@
                   Conductores
                 </a>
               </li>
-              {{--<li>
+              <li>
                 <a href="{{route('usuarios.index')}}" class="nav-link text-white @if (request()->routeIs('usuarios.index')) active @endif">
                   <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
                   Usuarios
                 </a>
-              </li>--}}
+              </li>
               <li>
                 <a href="{{route('reportes.index')}}" class="nav-link text-white @if (request()->routeIs('reportes.index')) active @endif">
                   <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#file"/></svg>

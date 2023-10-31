@@ -34,7 +34,7 @@
                                 <th>APELLIDOS</th>
                                 <th>TELEFONO</th>
                                 <th>USUARIO</th>
-                                <th>FECHA DE REGISTRO</th>
+                                <th>ACTIVO</th>
                                 <th>ACCIONES</th>
                             </tr>
                         </thead>
