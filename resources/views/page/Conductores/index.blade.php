@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-12 text-center">
                 <h1 class="display-4 mb-4">Gestión de Conductores</h1>
-                <a href="#" class="btn btn-primary2">Agregar Nuevo Conductor</a>
+                <a href="{{ route('conductores.create') }}" class="btn btn-primary2">Agregar Nuevo Conductor</a>
             </div>
         </div>
 
@@ -33,34 +33,41 @@
                                 <th>NOMBRE</th>
                                 <th>APELLIDOS</th>
                                 <th>TELEFONO</th>
-                                <th>USUARIO</th>
-                                <th>FECHA DE REGISTRO</th>
+                                <th>ACTIVO</th>
                                 <th>ACCIONES</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($socios as $id => $socio)
-                               <tr>
-                                    <td>{{ $socio['id'] }}</td>
-                                    <td>{{ $socio['nombre'] }}</td>
-                                    <td>{{ $socio['apellidos'] }}</td>
-                                    <td>{{ $socio['telefono'] }}</td>
-                                    <td>{{ $socio['usuario'] }}</td>
-                                    <td>{{ Carbon\Carbon::parse($socio['created_at'])->format('d/m/Y') }}</td>
-                                    <td></td>
-                                    <td>
+                            @foreach ($conductores as $id => $conductor)
+                            <tr>
+                                <td>{{ $conductor['IDConductor'] }}</td>
+                                <td>{{ $conductor['Nombre'] }}</td>
+                                <td>{{ $conductor['Apellidos'] }}</td>
+                                <td>{{ $conductor['Telefono'] }}</td>
+                                <td>{{ $conductor['Activo'] ? 'Si' : 'No' }}</td>
+                                <td>
+                                    <a href="{{ route('conductores.edit', ['conductore' => $id]) }}" class="btn btn-warning2 btn-sm">Editar</a>
+                                    {{-- <a href="{{ route('socios.show', $socio['IDSocio']) }}" class="btn btn-info2 btn-sm">Ver</a> --}}
+                                    {{-- <form action="{{ route('socios.destroy', $socio['IDSocio']) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger2 btn-sm" onclick="return confirm('¿Estás seguro de eliminar este registro?')">Eliminar</button>
+                                    </form> --}}
+                                </td>
+                                {{-- <td>
                                     <a href="#" class="btn btn-info2 btn-sm">Ver Detalles</a>
                                     <a href="#" class="btn btn-warning2 btn-sm">Editar</a>
                                     <a href="#" class="btn btn-danger2 btn-sm">Eliminar</a>
-                                </td>
-                                </tr>
-                            @endforeach --}}
+                                </td> --}}
+                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
+    @include('include.mensaje')
     @push('script')
         <script>
             $(document).ready(function() {

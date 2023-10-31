@@ -1,5 +1,6 @@
 @if(session()->has('message') )
     @if(session()->has('status') && !session()->get('status'))
+
     <script>
         swal({
             icon: "error",
