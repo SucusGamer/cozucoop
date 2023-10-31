@@ -33,7 +33,6 @@
                                 <th>NOMBRE</th>
                                 <th>APELLIDOS</th>
                                 <th>TELEFONO</th>
-                                <th>USUARIO</th>
                                 <th>ACTIVO</th>
                                 <th>ACCIONES</th>
                             </tr>
@@ -45,7 +44,6 @@
                                     <td>{{ $socio['Nombre'] }}</td>
                                     <td>{{ $socio['Apellidos'] }}</td>
                                     <td>{{ $socio['Telefono'] }}</td>
-                                    <td>{{ $socio['Usuario'] }}</td> 
                                     <td>{{ $socio['Activo'] ? 'Si' : 'No' }}</td>
                                     <td>
                                         <a href="{{ route('socios.edit', ['socio' => $id]) }}" class="btn btn-warning2 btn-sm">Editar</a>
