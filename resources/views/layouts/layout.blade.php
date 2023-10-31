@@ -9,7 +9,9 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/Botonesnuevos.css') }}">
-
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     @yield('extra-css')
     <!-- Theme CSS -->
@@ -25,8 +27,14 @@
 
 </head>
 <body>
+  @if (!auth()->user())
+    <div class="login-container">
+        <main class="py-4 ">
+            @yield('content')
+        </main>
+    </div>
+  @else
     @include('layouts.sidebar.sidebar')
-
     <section>
         <main class="d-flex flex-nowrap">
           <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark">
@@ -77,13 +85,18 @@
             <div class="dropdown">
               <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                 <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                <strong>mdo</strong>
+                <strong>{{auth()->user()->displayName}}</strong>
               </a>
               <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
                 <li><a class="dropdown-item" href="#">Ajustes</a></li>
-                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                <li><a class="dropdown-item"href="{{route('perfil.index')}}">Perfil</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Salir</a></li>
+                <li><a class="dropdown-item" href="{{ route('logout') }}"
+                onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();">Salir</a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                  @csrf
+                </form></li>
               </ul>
             </div>
           </div>
@@ -96,15 +109,16 @@
 
         </main>
         @include('layouts.color-select.select-theme')
-    </section>
-
-
-    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('js/sidebar.js') }}"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
-  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
-
-  @stack('script')
+      </section>
+      
+      
+      <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+      <script src="{{ asset('js/sidebar.js') }}"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+      <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+      <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+      
+      @stack('script')
+      @endif
 </body>
 </html>
