@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     @if(Session::has('message'))
-        <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <div class="alert alert-info alert-dismissible fade show mt-4" role="alert">
             {{ Session::get('message') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
@@ -11,7 +11,7 @@
 
     @if ($errors->any())
         @foreach ($errors->all() as $error)
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
                 {{ $error }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -19,13 +19,13 @@
     @endif
 
     @if(Session::has('error'))
-        <div class="alert alert-danger alert-dismissible fade show">
+        <div class="alert alert-danger alert-dismissible fade show mt-4">
             {{ Session::get('error') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
 
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mt-4">
         <div class="col-lg-4">
             <h4 class="mb-4">Información de Perfil</h4>
             <p class="text-justify mb-3">

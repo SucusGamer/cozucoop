@@ -37,3 +37,5 @@ Route::resource('/socios', SociosController::class)->names('socios');
 });
 
 Route::resource('/perfil', ProfileController::class)->names('perfil')->middleware('user', 'fireauth');
+
+Route::get('/email/verify', [App\Http\Controllers\Auth\ResetController::class, 'verify_email'])->name('verify')->middleware('fireauth');
