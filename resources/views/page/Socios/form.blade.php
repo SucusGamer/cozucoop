@@ -8,23 +8,28 @@
     <div class="card shadow">
       <div class="card-body p-4">
           <div class="form-floating mb-3">
-            {{Form::text('nombre', $id ? $socio['Nombre'] : null,
-            ['class' => 'form-control', 'id' => 'nombre', 'placeholder' => 'Nombre', 'autocomplete' => 'off', 'required'])}}
+            {{ Form::text(
+                'nombre',
+                isset($id) ? $socio['Nombre'] : null,
+                ['class' => 'form-control', 'id' => 'nombre', 'placeholder' => 'Nombre', 'autocomplete' => 'off', 'required']
+            ) }}
+
             {{Form::label('nombre', 'Nombre')}}
           </div>
           <div class="form-floating mb-3">
-            {{Form::text('apellidos', $id ? $socio['Apellidos'] : null,
+            {{Form::text('apellidos', isset($id) ? $socio['Apellidos'] : null,
             ['class' => 'form-control', 'id' => 'apellidos', 'placeholder' => 'Apellidos', 'autocomplete' => 'off', 'required'])}}
             {{Form::label('apellidos', 'Apellidos')}}
           </div>
           <div class="form-floating mb-3">
-              {{ Form::select('usuario', $usuarios, $id ? $socio['IDSocio'] : null,
+              {{ Form::select('usuario', $usuarios, isset($id) ? $socio['IDSocio'] : null,
               ['class' => 'form-select', 'id' => 'usuario', 'placeholder' => 'Seleccione uno', 'autocomplete' => 'off', 'required']) }}
               {{ Form::label('usuario', 'Usuario') }}
-              {{ Form::hidden('nombreUsuario', $id ? $socio['Usuario'] : null, ['id' => 'nombreUsuario']) }}
+              {{ Form::hidden('nombreUsuario', isset($id) ? $socio['Usuario'] : null, 
+              ['id' => 'nombreUsuario']) }}
           </div>
           <div class="form-floating mb-3">
-            {{Form::text('telefono', $id ? $socio['Telefono'] : null,
+            {{Form::text('telefono', isset($id) ? $socio['Telefono'] : null,
             ['class' => 'form-control', 'id' => 'telefono', 'placeholder' => 'Teléfono', 'autocomplete' => 'off', 'required'])}}
             {{Form::label('telefono', 'Teléfono')}}
           </div>
