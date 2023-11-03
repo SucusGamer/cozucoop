@@ -24,39 +24,42 @@
 
         <div class="row mt-4">
             <div class="col-12">
-                <div class="table-responsive">
-                    <table id="movimientosTable" class="table table-striped table-hover dataTable">
-                        <thead class="bg-primary text-white">
-                            <tr>
-                                <th>UNIDAD</th>
-                                <th>SOCIO</th>
-                                <th>CONDUCTOR</th>
-                                <th>ESTATUS</th>
-                                <th>ACCIONES</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{-- @foreach ($socios as $id => $socio)
-                               <tr>
-                                    <td>{{ $socio['id'] }}</td>
-                                    <td>{{ $socio['nombre'] }}</td>
-                                    <td>{{ $socio['apellidos'] }}</td>
-                                    <td>{{ $socio['telefono'] }}</td>
-                                    <td>{{ $socio['usuario'] }}</td>
-                                    <td>{{ Carbon\Carbon::parse($socio['created_at'])->format('d/m/Y') }}</td>
-                                    <td></td>
-                                    <td>
-                                    <a href="#" class="btn btn-info2 btn-sm">Ver Detalles</a>
-                                    <a href="#" class="btn btn-warning2 btn-sm">Editar</a>
-                                    <a href="#" class="btn btn-danger2 btn-sm">Eliminar</a>
-                                </td>
+                <div class="card border-primary mb-3" style="border-radius: 20px;padding: 10px">
+                    <div class="table-responsive">
+                        <table id="movimientosTable" class="table table-striped table-hover dataTable">
+                            <thead class="bg-primary text-white">
+                                <tr>
+                                    <th>UNIDAD</th>
+                                    <th>SOCIO</th>
+                                    <th>CONDUCTOR</th>
+                                    <th>ESTATUS</th>
+                                    <th>ACCIONES</th>
                                 </tr>
-                            @endforeach --}}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {{-- @foreach ($socios as $id => $socio)
+                                   <tr>
+                                        <td>{{ $socio['id'] }}</td>
+                                        <td>{{ $socio['nombre'] }}</td>
+                                        <td>{{ $socio['apellidos'] }}</td>
+                                        <td>{{ $socio['telefono'] }}</td>
+                                        <td>{{ $socio['usuario'] }}</td>
+                                        <td>{{ Carbon\Carbon::parse($socio['created_at'])->format('d/m/Y') }}</td>
+                                        <td></td>
+                                        <td>
+                                        <a href="#" class="btn btn-info2 btn-sm">Ver Detalles</a>
+                                        <a href="#" class="btn btn-warning2 btn-sm">Editar</a>
+                                        <a href="#" class="btn btn-danger2 btn-sm">Eliminar</a>
+                                    </td>
+                                    </tr>
+                                @endforeach --}}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     @push('script')
         <script>

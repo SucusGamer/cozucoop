@@ -26,35 +26,36 @@
 
         <div class="row mt-4">
             <div class="col-12">
-                <div class="table-responsive">
-                    <table id="sociosTable" class="table table-striped table-hover dataTable">
-                        <thead class="bg-primary text-white">
-                            <tr>
-                                <th>ID</th>
-                                <th>USUARIO</th>
-                                <th>CORREO</th>
-                                <th>ACCIONES</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($usuarios as $id => $usuario) 
+                <div class="card border-primary mb-3" style="border-radius: 20px;padding: 10px">
+                    <div class="table-responsive">
+                        <table id="sociosTable" class="table table-striped table-hover dataTable">
+                            <thead class="bg-primary text-white">
                                 <tr>
-                                    <td>{{ $usuario['IDUsuario'] }}</td>
-                                    <td>{{ $usuario['Usuario'] }}</td>
-                                    <td>{{ $usuario['Correo'] }}</td>
-                                    <td>
-                                        <a href="{{ route('usuarios.edit', ['usuario' => $id]) }}" class="btn btn-warning2 btn-sm">Editar</a>
-                                        {{-- <a href="{{ route('socios.show', $socio['IDSocio']) }}" class="btn btn-info2 btn-sm">Ver</a> --}}
-                                        {{-- <form action="{{ route('socios.destroy', $socio['IDSocio']) }}" method="POST" class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger2 btn-sm" onclick="return confirm('¿Estás seguro de eliminar este registro?')">Eliminar</button>
-                                        </form> --}}
-                                    </td>
+                                    <th>USUARIO</th>
+                                    <th>CORREO</th>
+                                    <th>ACCIONES</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($usuarios as $id => $usuario)
+                                    <tr>
+                                        <td>{{ $usuario['Usuario'] }}</td>
+                                        <td>{{ $usuario['Correo'] }}</td>
+                                        <td style="text-align: right">
+                                            <a href="{{ route('usuarios.edit', ['usuario' => $id]) }}"
+                                                class="btn btn-warning2 btn-sm">Editar</a>
+                                            {{-- <a href="{{ route('socios.show', $socio['IDSocio']) }}" class="btn btn-info2 btn-sm">Ver</a> --}}
+                                            {{-- <form action="{{ route('socios.destroy', $socio['IDSocio']) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger2 btn-sm" onclick="return confirm('¿Estás seguro de eliminar este registro?')">Eliminar</button>
+                                            </form> --}}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
