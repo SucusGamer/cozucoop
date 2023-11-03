@@ -25,44 +25,44 @@
 
         <div class="row mt-4">
             <div class="col-12">
-                <div class="table-responsive">
-                    <table id="conductoresTable" class="table table-striped table-hover dataTable">
-                        <thead class="bg-primary text-white">
-                            <tr>
-                                <th>ID</th>
-                                <th>NOMBRE</th>
-                                <th>APELLIDOS</th>
-                                <th>TELEFONO</th>
-                                <th>ACTIVO</th>
-                                <th>ACCIONES</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($conductores as $id => $conductor)
-                            <tr>
-                                <td>{{ $conductor['IDConductor'] }}</td>
-                                <td>{{ $conductor['Nombre'] }}</td>
-                                <td>{{ $conductor['Apellidos'] }}</td>
-                                <td>{{ $conductor['Telefono'] }}</td>
-                                <td>{{ $conductor['Activo'] ? 'Si' : 'No' }}</td>
-                                <td>
-                                    <a href="{{ route('conductores.edit', ['conductore' => $id]) }}" class="btn btn-warning2 btn-sm">Editar</a>
-                                    {{-- <a href="{{ route('socios.show', $socio['IDSocio']) }}" class="btn btn-info2 btn-sm">Ver</a> --}}
-                                    {{-- <form action="{{ route('socios.destroy', $socio['IDSocio']) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger2 btn-sm" onclick="return confirm('¿Estás seguro de eliminar este registro?')">Eliminar</button>
-                                    </form> --}}
-                                </td>
-                                {{-- <td>
-                                    <a href="#" class="btn btn-info2 btn-sm">Ver Detalles</a>
-                                    <a href="#" class="btn btn-warning2 btn-sm">Editar</a>
-                                    <a href="#" class="btn btn-danger2 btn-sm">Eliminar</a>
-                                </td> --}}
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                <div class="card border-primary mb-3" style="border-radius: 20px;padding: 10px">
+                    <div class="table-responsive">
+                        <table id="conductoresTable" class="table table-striped table-hover dataTable">
+                            <thead class="bg-primary text-white">
+                                <tr>
+                                    <th>NOMBRE</th>
+                                    <th>APELLIDOS</th>
+                                    <th>TELEFONO</th>
+                                    <th>ACTIVO</th>
+                                    <th>ACCIONES</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($conductores as $id => $conductor)
+                                <tr>
+                                    <td>{{ $conductor['Nombre'] }}</td>
+                                    <td>{{ $conductor['Apellidos'] }}</td>
+                                    <td>{{ $conductor['Telefono'] }}</td>
+                                    <td>{{ $conductor['Activo'] ? 'Si' : 'No' }}</td>
+                                    <td>
+                                        <a href="{{ route('conductores.edit', ['conductore' => $id]) }}" class="btn btn-warning2 btn-sm">Editar</a>
+                                        {{-- <a href="{{ route('socios.show', $socio['IDSocio']) }}" class="btn btn-info2 btn-sm">Ver</a> --}}
+                                        {{-- <form action="{{ route('socios.destroy', $socio['IDSocio']) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger2 btn-sm" onclick="return confirm('¿Estás seguro de eliminar este registro?')">Eliminar</button>
+                                        </form> --}}
+                                    </td>
+                                    {{-- <td>
+                                        <a href="#" class="btn btn-info2 btn-sm">Ver Detalles</a>
+                                        <a href="#" class="btn btn-warning2 btn-sm">Editar</a>
+                                        <a href="#" class="btn btn-danger2 btn-sm">Eliminar</a>
+                                    </td> --}}
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
