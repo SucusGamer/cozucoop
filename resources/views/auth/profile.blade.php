@@ -37,7 +37,7 @@
         <div class="col-lg-8 text-center pt-0">
             <div class="card py-4 mb-5 mt-md-3 rounded shadow-lg">
                 {!! Form::model($user, ['method'=>'PATCH', 'action'=> ['App\Http\Controllers\Auth\ProfileController@update',$user->uid]]) !!}
-                
+
                 <div class="form-group px-3 mb-3">
                     {!! Form::label('displayName', 'Nombre', ['class' => 'form-label text-start']) !!}
                     {!! Form::text('displayName', null, ['class'=>'form-control'])!!}
@@ -48,7 +48,7 @@
 
                 <div class="form-group row mb-0 me-4">
                     <div class="col-md-8 offset-md-4 text-end">
-                        {!! Form::submit('Guardar', ['class'=>'btn btn-primary']) !!}
+                        {!! Form::submit('Guardar', ['class'=>'btn btn-primary2']) !!}
                     </div>
                 </div>
 
@@ -82,7 +82,7 @@
 
                 <div class="form-group row mb-0 me-4">
                     <div class="col-md-8 offset-md-4 text-end">
-                        {!! Form::submit('Guardar', ['class'=>'btn btn-primary']) !!}
+                        {!! Form::submit('Guardar', ['class'=>'btn btn-primary2']) !!}
                     </div>
                 </div>
                 {!! Form::close() !!}
@@ -108,7 +108,7 @@
                 {!! Form::open(['method'=>'DELETE', 'action' =>['App\Http\Controllers\Auth\ProfileController@destroy',$user->uid]]) !!}
                 <div class="form-group row mb-0 mr-4 pt-4 px-3">
                     <div class="col-md-8 offset-md-4 text-start">
-                        {!! Form::submit('Eliminar Cuenta', ['class'=>'btn btn-danger pl-3']) !!}
+                        {!! Form::submit('Eliminar Cuenta', ['class'=>'btn btn-danger2 pl-3']) !!}
                     </div>
                 </div>
                 {!! Form::close() !!}

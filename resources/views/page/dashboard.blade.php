@@ -9,20 +9,20 @@
             <h1 class="text-center">Dashboard</h1>
         </div>
     </div>
-    
+
     <div class="row mt-4">
         <div class="col-12 mb-4">
             <h2 class="text-center">Fallos</h2>
         </div>
-        
+
         @foreach($fallosActivos as $id => $fallo)
             <div class="col-md-4 mb-4">
-                <div class="card">
+                <div class="card border-info mb-3" style="border-radius: 20px">
                     <div class="card-body">
                         <h5 class="card-title">{{ $fallo['TipoDeFallo'] }}</h5>
                         <span class="badge bg-success">Activo</span>
                         <p class="card-text">{{ $fallo['Descripcion'] }}</p>
-                        
+
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><i class="fas fa-user"></i> Socio: {{ $fallo['NombreSocio'] }}</li>
                             <li class="list-group-item"><i class="fas fa-user-tie"></i> Conductor: {{ $fallo['NombreConductor'] }}</li>
@@ -43,15 +43,15 @@
         <div class="col-12 mb-4">
             <h2 class="text-center">Reportes</h2>
         </div>
-    
+
         @foreach($reportes as $id => $reporte)
             <div class="col-md-4 mb-4">
-                <div class="card shadow rounded">
+                <div class="card border-success mb-3" style="border-radius: 15px;padding: 10px">
                     <div class="card-body">
                         <h5 class="card-title">{{ $reporte['TipoReporte'] }}</h5>
                         <span class="badge bg-success">Activo</span>
                         <p class="card-text">{{ $reporte['Descripcion'] }}</p>
-                    
+
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><i class="fas fa-user me-2"></i> Socio: {{ $reporte['NombreSocio'] }}</li>
                             <li class="list-group-item"><i class="fas fa-user-tie me-2"></i> Conductor: {{ $reporte['NombreConductor'] }}</li>
