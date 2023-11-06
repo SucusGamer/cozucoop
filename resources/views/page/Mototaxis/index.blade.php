@@ -19,6 +19,7 @@
         <div class="row">
             <div class="col-12 text-center">
                 <h1 class="display-4 mb-4">Gestión de Mototaxis</h1>
+                <a href="{{ route('mototaxis.create') }}" class="btn btn-primary2">Agregar Nueva Unidad</a>
             </div>
         </div>
 
@@ -37,22 +38,22 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($socios as $id => $socio)
+                                @foreach ($mototaxis as $id => $mototaxi)
                                    <tr>
-                                        <td>{{ $socio['id'] }}</td>
-                                        <td>{{ $socio['nombre'] }}</td>
-                                        <td>{{ $socio['apellidos'] }}</td>
-                                        <td>{{ $socio['telefono'] }}</td>
-                                        <td>{{ $socio['usuario'] }}</td>
-                                        <td>{{ Carbon\Carbon::parse($socio['created_at'])->format('d/m/Y') }}</td>
-                                        <td></td>
+                                        <td>{{ $mototaxi['Unidad'] }}</td>
+                                        <td>{{ $mototaxi['NombreSocio'] }}</td>
+                                        <td>{{ $mototaxi['NombreConductor'] }}</td>
                                         <td>
-                                        <a href="#" class="btn btn-info2 btn-sm">Ver Detalles</a>
-                                        <a href="#" class="btn btn-warning2 btn-sm">Editar</a>
-                                        <a href="#" class="btn btn-danger2 btn-sm">Eliminar</a>
+                                            <i class="fas {{ $mototaxi['Activo'] ? 'fa-check' : 'fa-times' }}"></i>
+                                        </td>
+                                        <td>
+                                        <a href="{{ route('mototaxis.edit', ['mototaxi' => $id]) }}" class="btn btn-warning2 btn-sm">Editar</a>
+                                        {{Form::open(['route' => ['mototaxis.destroy',['mototaxi' => $id]], 'method' => 'DELETE', 'class' => 'd-inline'])}}
+                                            <button type="submit" class="btn btn-danger2 btn-sm delete">Eliminar</button>
+                                        {{Form::close()}}
                                     </td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -61,6 +62,7 @@
         </div>
     </div>
     </div>
+    @include('include.mensaje')
     @push('script')
         <script>
             $(document).ready(function() {

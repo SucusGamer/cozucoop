@@ -69,9 +69,10 @@ class ResetController extends Controller
     try {
       $email = $request->email;
       $link = app('firebase.auth')->sendPasswordResetLink($email);
-      Session::flash('message', 'An email has been sent. Please check your inbox.');
+      Session::flash('message', 'Un correo ha sido enviado a su cuenta de correo electrónico. Por favor, compruebe su bandeja de entrada.');
       return back()->withInput();
     } catch (FirebaseException $e) {
+      // dd($e);
       $error = str_replace('_', ' ', $e->getMessage());
       Session::flash('error', $error);
       return back()->withInput();
@@ -93,7 +94,7 @@ class ResetController extends Controller
       $email = app('firebase.auth')->getUser($uid)->email;
       $link = app('firebase.auth')->sendEmailVerificationLink($email);
 
-      Session::flash('resent', 'An email has been sent. Please check your inbox.');
+      Session::flash('resent', 'Un correo ha sido enviado a su cuenta de correo electrónico. Por favor, compruebe su bandeja de entrada.');
       return back()->withInput();
     } catch (FirebaseException $e) {
       Session::flash('error', $e->getMessage());
