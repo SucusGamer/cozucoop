@@ -22,15 +22,6 @@ class ConductoresController extends Controller
 
         return $database;
     }
-    public function auth()
-    {
-        $factory = (new Factory)
-            ->withServiceAccount(base_path(env('FIREBASE_CREDENTIALS')));
-        $auth = $factory->createAuth();
-
-        return $auth;
-    }
-
 
     public function index()
     {

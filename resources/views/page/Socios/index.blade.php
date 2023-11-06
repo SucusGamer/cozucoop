@@ -46,12 +46,12 @@
                                         <td>{{ $socio['Activo'] ? 'Si' : 'No' }}</td>
                                         <td>
                                             <a href="{{ route('socios.edit', ['socio' => $id]) }}" class="btn btn-warning2 btn-sm">Editar</a>
-                                            {{-- <a href="{{ route('socios.show', $socio['IDSocio']) }}" class="btn btn-info2 btn-sm">Ver</a> --}}
-                                            {{-- <form action="{{ route('socios.destroy', $socio['IDSocio']) }}" method="POST" class="d-inline">
+                                            <a href="{{ route('socios.show', $socio['IDSocio']) }}" class="btn btn-info2 btn-sm">Ver</a>
+                                            <form action="{{ route('socios.destroy', $socio['IDSocio']) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger2 btn-sm" onclick="return confirm('¿Estás seguro de eliminar este registro?')">Eliminar</button>
-                                            </form> --}}
+                                            </form>
                                         </td>
                                         {{-- <td>
                                             <a href="#" class="btn btn-info2 btn-sm">Ver Detalles</a>

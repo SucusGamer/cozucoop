@@ -12,35 +12,6 @@
 
     <div class="row mt-4">
         <div class="col-12 mb-4">
-            <h2 class="text-center">Fallos</h2>
-        </div>
-
-        @foreach($fallosActivos as $id => $fallo)
-            <div class="col-md-4 mb-4">
-                <div class="card border-info mb-3" style="border-radius: 20px">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $fallo['TipoDeFallo'] }}</h5>
-                        <span class="badge bg-success">Activo</span>
-                        <p class="card-text">{{ $fallo['Descripcion'] }}</p>
-
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><i class="fas fa-user"></i> Socio: {{ $fallo['NombreSocio'] }}</li>
-                            <li class="list-group-item"><i class="fas fa-user-tie"></i> Conductor: {{ $fallo['NombreConductor'] }}</li>
-                            <li class="list-group-item"><i class="fas fa-bus"></i> Unidad: {{ $fallo['Unidad'] }}</li>
-                            <li class="list-group-item"><i class="far fa-calendar"></i> Fecha: {{ $fallo['Fecha'] }}</li>
-                        </ul>
-
-                        {{-- <div class="text-center mt-3">
-                            <a href="#" class="btn btn-primary">Ver Detalles</a>
-                        </div> --}}
-                    </div>
-                </div>
-            </div>
-        @endforeach
-    </div>
-
-    <div class="row mt-4">
-        <div class="col-12 mb-4">
             <h2 class="text-center">Reportes</h2>
         </div>
 

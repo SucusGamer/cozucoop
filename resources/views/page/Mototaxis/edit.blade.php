@@ -1,5 +1,5 @@
 @extends('layouts.layout')
-@section('title', 'Editar Conductor')
+@section('title', 'Editar Mototaxi')
 @section('extra-js')
 
 @endsection
@@ -9,10 +9,10 @@
     <div class="col-md-12">
       <hr>
       {{-- {{ Breadcrumbs::render() }} --}}
-        {{ Form::open(['route' => ['conductores.update',['conductore' => $id]], 'method' => 'PUT']) }}
-        @include('page.conductores.form')
+        {{ Form::open(['route' => ['mototaxis.update',['mototaxi' => $id]], 'method' => 'PUT']) }}
+        @include('page.mototaxis.form')
         <div class="text-center mb-3">
-          <button type="submit" class="btn btn-primary2">Actualizar Conductor</button>
+          <button type="submit" class="btn btn-primary2">Actualizar Mototaxi</button>
         </div>
       {{Form::close()}}
     </div>

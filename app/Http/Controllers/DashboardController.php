@@ -23,21 +23,12 @@ class DashboardController extends Controller
     }
     public function index()
     {
-        // Obtener todos los fallos
-        $fallos = $this->connect()->collection('Fallos')->documents();
-
         $reportes = $this->connect()->collection('Reportes')->documents();
-
         // Obtener la información de usuarios
         $usuarios = $this->selectUsuarios();
-
         // Obtener fallos activos
-        $fallosActivos = $this->getFallosActivos($fallos, $usuarios);
         $reportesActivos = $this->getReportes($reportes, $usuarios);
-        // dd($reportesActivos);
-
         return view('page.dashboard')->with([
-            'fallosActivos' => $fallosActivos,
             'reportes' => $reportesActivos
         ]);
     }
@@ -110,7 +101,8 @@ class DashboardController extends Controller
     {
         //
     }
-    function getFallosActivos($fallos, $usuarios)
+
+    function getReportes($fallos, $usuarios)
     {
         $fallosActivos = [];
         foreach ($fallos as $fallo) {
@@ -122,18 +114,6 @@ class DashboardController extends Controller
             }
         }
         return $fallosActivos;
-    }
-
-    public function getReportes($fallos, $usuarios)
-    {
-        $reportesArray = [];
-        foreach ($fallos as $fallo) {
-            $falloData = $fallo->data();
-            $falloData['NombreSocio'] = $usuarios[$falloData['IDSocio']]['Usuario'];
-            $falloData['NombreConductor'] = $usuarios[$falloData['IDConductor']]['Usuario'];
-            $reportesArray[$fallo->id()] = $falloData;
-        }
-        return $reportesArray;
     }
 
 

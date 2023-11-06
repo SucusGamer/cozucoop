@@ -75,6 +75,18 @@ class LoginController extends Controller
             //   'login_at' => Carbon::now()->toDayDateTimeString(),
             // ]);
 
+            if (isset($request->remember) && !empty($request->remember)) {
+                $expireTime = time() + 60 * 60 * 2; // 2 horas
+                setcookie('email', $request->email, $expireTime, '/');
+                setcookie('password', $request->password, $expireTime, '/');
+            } else {
+                setcookie('email', '', time() - 3600, '/'); // Expira inmediatamente al restar una hora
+                setcookie('password', '', time() - 3600, '/');
+            }
+
+            //si cierra sesión, que se ponga las credenciales
+            
+
             return redirect($this->redirectPath());
         } catch (FirebaseException $e) {
             throw ValidationException::withMessages([$this->username() => [trans('auth.failed')],]);
