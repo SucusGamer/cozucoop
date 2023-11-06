@@ -1,5 +1,5 @@
 @extends('layouts.layout')
-
+@section('title', 'Iniciar Sesión')
 @section('content')
     <div class="container">
         <div class="d-flex justify-content-center align-items-center" style="min-height: 94vh;">
@@ -18,7 +18,8 @@
                                 <div class="col-md-6">
                                     <input id="email" type="email"
                                         class="form-control @error('email') is-invalid @enderror" name="email"
-                                        value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                        @if(isset($_COOKIE['email'])) value="{{ $_COOKIE['email'] }}" @endif
+                                        required autocomplete="email" autofocus>
 
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -35,6 +36,7 @@
                                 <div class="col-md-6">
                                     <input id="password" type="password"
                                         class="form-control @error('password') is-invalid @enderror" name="password"
+                                        @if(isset($_COOKIE['password'])) value="{{ $_COOKIE['password'] }}" @endif
                                         required autocomplete="current-password">
 
                                     @error('password')
