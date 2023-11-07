@@ -33,7 +33,7 @@
                                     <th>NOMBRE</th>
                                     <th>APELLIDOS</th>
                                     <th>TELEFONO</th>
-                                    <th>ACTIVO</th>
+                                    <th>ESTATUS</th>
                                     <th>ACCIONES</th>
                                 </tr>
                             </thead>
@@ -43,15 +43,12 @@
                                         <td>{{ $socio['Nombre'] }}</td>
                                         <td>{{ $socio['Apellidos'] }}</td>
                                         <td>{{ $socio['Telefono'] }}</td>
-                                        <td>{{ $socio['Activo'] ? 'Si' : 'No' }}</td>
+                                        <td>
+                                            <i class="fas {{ $socio['Activo'] ? 'fa-check' : 'fa-times' }}"></i>
+                                        </td>
                                         <td>
                                             <a href="{{ route('socios.edit', ['socio' => $id]) }}" class="btn btn-warning2 btn-sm">Editar</a>
-                                            <a href="{{ route('socios.show', $socio['IDSocio']) }}" class="btn btn-info2 btn-sm">Ver</a>
-                                            <form action="{{ route('socios.destroy', $socio['IDSocio']) }}" method="POST" class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger2 btn-sm" onclick="return confirm('¿Estás seguro de eliminar este registro?')">Eliminar</button>
-                                            </form>
+                                            {{-- <a href="{{ route('socios.show', $socio['IDSocio']) }}" class="btn btn-info2 btn-sm">Ver</a> --}}
                                         </td>
                                         {{-- <td>
                                             <a href="#" class="btn btn-info2 btn-sm">Ver Detalles</a>

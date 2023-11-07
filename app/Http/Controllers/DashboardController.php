@@ -24,12 +24,35 @@ class DashboardController extends Controller
     public function index()
     {
         $reportes = $this->connect()->collection('Reportes')->documents();
+        $turnos = $this->connect()->collection('Turno')->documents();
         // Obtener la información de usuarios
         $usuarios = $this->selectUsuarios();
         // Obtener fallos activos
         $reportesActivos = $this->getReportes($reportes, $usuarios);
+        $informacionUnidades = [];
+
+
+        $informacionUnidades = [];
+
+        foreach ($turnos as $documento) {
+            $tipo = $documento->data()['Tipo'];
+            $idConductor = $documento->data()['IDConductor'];
+            $unidad = $documento->data()['Unidad'];
+            $turno = $documento->data()['Turno'];
+            $cambioUnidad = $documento->data()['CambioUnidad'] ?? null;
+
+            if ($tipo == 'Salida') {
+                if ($cambioUnidad !== null) {
+                    $informacionUnidades[$idConductor][$unidad][] = $cambioUnidad;
+                } else {
+                    $informacionUnidades[$idConductor][$unidad][] = $unidad;
+                }
+            }
+        }
+        // dd($informacionUnidades);
         return view('page.dashboard')->with([
-            'reportes' => $reportesActivos
+            'reportes' => $reportesActivos,
+            'informacionUnidades' => $informacionUnidades
         ]);
     }
 
