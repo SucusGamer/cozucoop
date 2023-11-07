@@ -48,9 +48,9 @@
                                         </td>
                                         <td>
                                         <a href="{{ route('mototaxis.edit', ['mototaxi' => $id]) }}" class="btn btn-warning2 btn-sm">Editar</a>
-                                        {{Form::open(['route' => ['mototaxis.destroy',['mototaxi' => $id]], 'method' => 'DELETE', 'class' => 'd-inline'])}}
+                                        {{-- {{Form::open(['route' => ['mototaxis.destroy',['mototaxi' => $id]], 'method' => 'DELETE', 'class' => 'd-inline'])}}
                                             <button type="submit" class="btn btn-danger2 btn-sm delete">Eliminar</button>
-                                        {{Form::close()}}
+                                        {{Form::close()}} --}}
                                     </td>
                                     </tr>
                                 @endforeach
