@@ -37,9 +37,51 @@
                 </div>
             </div>
         @endforeach
+
+        <canvas id="grafico"></canvas>
     </div>
 
 
 
 </div>
+@push('script')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('grafico').getContext('2d');
+
+    var data = @json($informacionUnidades);
+
+    var labels = [];
+    var dataValues = [];
+
+    for (var conductor in data) {
+        for (var unidad in data[conductor]) {
+            var turnos = data[conductor][unidad].join(', ');
+            labels.push('Conductor ' + conductor + ' - Unidad ' + unidad);
+            dataValues.push(turnos);
+        }
+    }
+
+    var chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Turnos de uso',
+                data: dataValues,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+@endpush
 @stop

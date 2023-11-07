@@ -33,7 +33,7 @@
                                     <th>NOMBRE</th>
                                     <th>APELLIDOS</th>
                                     <th>TELEFONO</th>
-                                    <th>ACTIVO</th>
+                                    <th>ESTATUS</th>
                                     <th>ACCIONES</th>
                                 </tr>
                             </thead>
@@ -43,7 +43,9 @@
                                     <td>{{ $conductor['Nombre'] }}</td>
                                     <td>{{ $conductor['Apellidos'] }}</td>
                                     <td>{{ $conductor['Telefono'] }}</td>
-                                    <td>{{ $conductor['Activo'] ? 'Si' : 'No' }}</td>
+                                    <td> 
+                                        <i class="fas {{ $conductor['Activo'] ? 'fa-check' : 'fa-times' }}"></i>
+                                    </td>
                                     <td>
                                         <a href="{{ route('conductores.edit', ['conductore' => $id]) }}" class="btn btn-warning2 btn-sm">Editar</a>
                                         {{-- <a href="{{ route('socios.show', $socio['IDSocio']) }}" class="btn btn-info2 btn-sm">Ver</a> --}}

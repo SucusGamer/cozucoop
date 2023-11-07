@@ -1,6 +1,5 @@
 @extends('layouts.layout')
-
-@section('title', 'Usuario')
+@section('title', 'Usuarios')
 
 @section('extra-js')
 @endsection

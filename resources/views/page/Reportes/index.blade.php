@@ -47,7 +47,9 @@
                                         <td>{{ $reporte['NombreConductor'] }}</td>
                                         <td>{{ $reporte['TipoReporte'] }}</td>
                                         <td>{{ $reporte['Fecha'] }}</td>
-                                        <td>{{ $reporte['Activo'] ? 'Si' : 'No' }}</td>
+                                        <td>
+                                            <i class="fas {{ $reporte['Activo'] ? 'fa-check' : 'fa-times' }}"></i>
+                                        </td>
                                         <td>
                                             {{-- <a href="{{ route('reportes.edit', ['reporte' => $id]) }}" class="btn btn-warning2 btn-sm">Editar</a> --}}
                                             <a href="{{ route('reportes.show', ['reporte' => $id]) }}"
