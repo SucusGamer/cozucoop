@@ -24,7 +24,7 @@
             Before proceeding, please check your email for a verification link.
             If you did not receive the email
 
-            <a href="/home" style="text-decoration:none;">{{ __('click here to request another') }}</a>
+            <a href="/" style="text-decoration:none;">{{ __('click here to request another') }}</a>
           </div>
         </div>
       </div>

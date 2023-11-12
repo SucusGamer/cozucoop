@@ -14,6 +14,7 @@ return [
     */
 
     'failed' => 'Estas credenciales no coinciden con nuestros registros.',
+    'not_admin' => 'No tienes privilegios administrativos.',
     'throttle' => 'Demasiados intentos de inicio de sesión. Por favor, intente de nuevo en :seconds segundos.',
 
 ];
