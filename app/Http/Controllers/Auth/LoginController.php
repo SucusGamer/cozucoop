@@ -59,6 +59,17 @@ class LoginController extends Controller
 
             //uid Session
             $loginuid = $signInResult->firebaseUserId();
+            $userDetails = $auth->getUser($loginuid);
+            $isAdmin = $userDetails->customClaims['admin'] ?? false;
+            // dd($isAdmin);
+
+            // if (!$isAdmin) {
+            //     throw ValidationException::withMessages([$this->username() => [trans('auth.not_admin')],]);
+            // }
+
+            // Verificar si el usuario tiene el tipo 'Administrador'
+            // $userType = $userDetails->customClaims['tipo'];
+            // dd($userType);
             Session::put('uid', $loginuid);
             $auth = app('firebase.auth');
             $auth->setCustomUserClaims($loginuid, ['admin' => false]);

@@ -38,7 +38,7 @@
             </div>
         @endforeach
 
-        <canvas id="grafico"></canvas>
+        {{-- <canvas id="grafico"></canvas> --}}
     </div>
 
 

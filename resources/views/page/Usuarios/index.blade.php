@@ -30,25 +30,32 @@
                         <table id="sociosTable" class="table table-striped table-hover dataTable">
                             <thead class="bg-primary text-white">
                                 <tr>
+                                    <th>NOMBRE</th>
                                     <th>USUARIO</th>
                                     <th>CORREO</th>
+                                    <th>TIPO</th>
+                                    <th>ESTATUS</th>
                                     <th>ACCIONES</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($usuarios as $id => $usuario)
                                     <tr>
+                                        <td>
+                                            {{ isset($usuario['Nombre']) && isset($usuario['Apellidos']) ? $usuario['Nombre'] . ' ' . $usuario['Apellidos'] : 'Sin descripción' }}
+                                        </td>
                                         <td>{{ $usuario['Usuario'] }}</td>
                                         <td>{{ $usuario['Correo'] }}</td>
-                                        <td style="text-align: right">
+                                        <td>{{ isset($usuario['Tipo']) ? $usuario['Tipo'] : 'Sin descripción' }}</td>
+                                        <td>{{ isset($usuario['Estatus']) ? $usuario['Estatus'] : 'Sin descripción' }}</td>
+                                        <td>
                                             <a href="{{ route('usuarios.edit', ['usuario' => $id]) }}"
                                                 class="btn btn-warning2 btn-sm">Editar</a>
-                                            {{-- <a href="{{ route('socios.show', $socio['IDSocio']) }}" class="btn btn-info2 btn-sm">Ver</a> --}}
-                                            {{-- <form action="{{ route('socios.destroy', $socio['IDSocio']) }}" method="POST" class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger2 btn-sm" onclick="return confirm('¿Estás seguro de eliminar este registro?')">Eliminar</button>
-                                            </form> --}}
+                                            {{-- @if ($usuario['Estatus'] == 1) --}}
+                                            {{Form::open(['route' => ['usuarios.destroy',['usuario' => $id]], 'method' => 'DELETE', 'class' => 'd-inline'])}}
+                                                <button type="submit" class="btn btn-danger2 btn-sm delete">Eliminar</button>
+                                            {{Form::close()}}
+                                            {{-- @endif --}}
                                         </td>
                                     </tr>
                                 @endforeach

@@ -13,6 +13,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link href="{{ asset('css/style.default.css') }}" rel="stylesheet">
 
     @yield('extra-css')
     <!-- Theme CSS -->
@@ -144,11 +145,41 @@
             @include('layouts.color-select.select-theme')
         </section>
 
+        <div class="lds-spinner2" id="loading" style="display: none">
+            <div class="lds-spinner">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
 
+        <div class="lds-roller" id="loader" style="display: none">
+            <div class="lds-roller2">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
         <script src="{{ asset('js/sidebar.js') }}"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        {{-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script> --}}
+        <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
         <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+        <script src="{{ asset('js/jquery.validate.min.js') }}"></script>
         <script src="{{ asset('js/custom.js') }}"></script>
 
         @stack('script')

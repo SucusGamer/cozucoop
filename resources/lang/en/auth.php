@@ -14,6 +14,7 @@ return [
     */
 
     'failed' => 'These credentials do not match our records.',
+    'not_admin' => 'You do not have administrative privileges.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
 ];
