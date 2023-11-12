@@ -10,10 +10,10 @@
     <div class="col-md-12">
       <hr>
       {{-- {{ Breadcrumbs::render() }} --}}
-      {{Form::open(['route' => 'usuarios.store', 'method' => 'POST'])}}
+      {{Form::open(['route' => 'usuarios.store','id' => 'basicForm', 'method' => 'POST'])}}
         @include('page.usuarios.form')
         <div class="text-center mb-3">
-          <button type="submit" class="btn btn-primary2">Crear Usuario</button>
+          <button type="submit" class="btn btn-primary2 enviar">Crear Usuario</button>
         </div>
       {{Form::close()}}
     </div>
