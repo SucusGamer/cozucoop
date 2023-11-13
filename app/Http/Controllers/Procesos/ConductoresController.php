@@ -25,7 +25,8 @@ class ConductoresController extends Controller
 
     public function index()
     {
-        $conductores = $this->connect()->collection('Conductores')->documents();
+        $conductores
+        = $this->connect()->collection('Usuarios')->where('Tipo', '=', 'Conductor')->documents();
         //sacamos lo que necesitamos de conductores
         foreach ($conductores as $conductor) {
             $conductoresArray[$conductor->id()] = $conductor->data();

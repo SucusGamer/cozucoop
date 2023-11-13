@@ -24,6 +24,7 @@
 <script>
 
         $.get('/mototaxi/getUnidad', function(resp){
+          console.log(resp);
             $.each(resp, function(i, item){
                 $('#unidad').val(item);
             });
