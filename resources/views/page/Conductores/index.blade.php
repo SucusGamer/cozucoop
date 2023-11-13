@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-12 text-center">
                 <h1 class="display-4 mb-4">Gestión de Conductores</h1>
-                <a href="{{ route('conductores.create') }}" class="btn btn-primary2">Agregar Nuevo Conductor</a>
+                {{-- <a href="{{ route('conductores.create') }}" class="btn btn-primary2">Agregar Nuevo Conductor</a> --}}
             </div>
         </div>
 
@@ -32,9 +32,10 @@
                                 <tr>
                                     <th>NOMBRE</th>
                                     <th>APELLIDOS</th>
+                                    <th>USUARIO</th>
                                     <th>TELEFONO</th>
                                     <th>ESTATUS</th>
-                                    <th>ACCIONES</th>
+                                    {{-- <th>ACCIONES</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -42,19 +43,20 @@
                                 <tr>
                                     <td>{{ $conductor['Nombre'] }}</td>
                                     <td>{{ $conductor['Apellidos'] }}</td>
+                                    <td>{{ $conductor['Usuario'] }}</td>
                                     <td>{{ $conductor['Telefono'] }}</td>
                                     <td> 
-                                        <i class="fas {{ $conductor['Activo'] ? 'fa-check' : 'fa-times' }}"></i>
+                                        <i class="fas {{ $conductor['Estatus'] ? 'fa-check' : 'fa-times' }}"></i>
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                         <a href="{{ route('conductores.edit', ['conductore' => $id]) }}" class="btn btn-warning2 btn-sm">Editar</a>
-                                        {{-- <a href="{{ route('socios.show', $socio['IDSocio']) }}" class="btn btn-info2 btn-sm">Ver</a> --}}
-                                        {{-- <form action="{{ route('socios.destroy', $socio['IDSocio']) }}" method="POST" class="d-inline">
+                                        <a href="{{ route('socios.show', $socio['IDSocio']) }}" class="btn btn-info2 btn-sm">Ver</a>
+                                        <form action="{{ route('socios.destroy', $socio['IDSocio']) }}" method="POST" class="d-inline">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger2 btn-sm" onclick="return confirm('¿Estás seguro de eliminar este registro?')">Eliminar</button>
-                                        </form> --}}
-                                    </td>
+                                        </form>
+                                    </td> --}}
                                     {{-- <td>
                                         <a href="#" class="btn btn-info2 btn-sm">Ver Detalles</a>
                                         <a href="#" class="btn btn-warning2 btn-sm">Editar</a>

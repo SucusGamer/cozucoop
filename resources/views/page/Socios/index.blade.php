@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-12 text-center">
                 <h1 class="display-4 mb-4">Gestión de Socios</h1>
-                <a href="{{ route('socios.create') }}" class="btn btn-primary2">Agregar Nuevo Socio</a>
+                {{-- <a href="{{ route('socios.create') }}" class="btn btn-primary2">Agregar Nuevo Socio</a> --}}
             </div>
         </div>
 
@@ -32,9 +32,10 @@
                                 <tr>
                                     <th>NOMBRE</th>
                                     <th>APELLIDOS</th>
+                                    <th>USUARIO</th>
                                     <th>TELEFONO</th>
                                     <th>ESTATUS</th>
-                                    <th>ACCIONES</th>
+                                    {{-- <th>ACCIONES</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -42,14 +43,15 @@
                                     <tr>
                                         <td>{{ $socio['Nombre'] }}</td>
                                         <td>{{ $socio['Apellidos'] }}</td>
+                                        <td>{{ $socio['Usuario'] }}</td>
                                         <td>{{ $socio['Telefono'] }}</td>
                                         <td>
-                                            <i class="fas {{ $socio['Activo'] ? 'fa-check' : 'fa-times' }}"></i>
+                                            <i class="fas {{ $socio['Estatus'] ? 'fa-check' : 'fa-times' }}"></i>
                                         </td>
-                                        <td>
+                                        {{-- <td>
                                             <a href="{{ route('socios.edit', ['socio' => $id]) }}" class="btn btn-warning2 btn-sm">Editar</a>
-                                            {{-- <a href="{{ route('socios.show', $socio['IDSocio']) }}" class="btn btn-info2 btn-sm">Ver</a> --}}
-                                        </td>
+                                            <a href="{{ route('socios.show', $socio['IDSocio']) }}" class="btn btn-info2 btn-sm">Ver</a>
+                                        </td> --}}
                                         {{-- <td>
                                             <a href="#" class="btn btn-info2 btn-sm">Ver Detalles</a>
                                             <a href="#" class="btn btn-warning2 btn-sm">Editar</a>

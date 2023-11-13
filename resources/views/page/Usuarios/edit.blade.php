@@ -9,6 +9,9 @@
     <div class="col-md-12">
       <hr>
       {{-- {{ Breadcrumbs::render() }} --}}
+      <div class="col-12">
+          {{ Breadcrumbs::render('usuarios.edit', $id, old('back_to') ?? url()->previous()) }}
+      </div>
       @php
         //   dd($socio);
       @endphp
