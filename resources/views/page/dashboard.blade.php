@@ -41,6 +41,25 @@
         {{-- <canvas id="grafico"></canvas> --}}
     </div>
 
+    <div class="row mt-4">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-header">
+                    Resumen de Actividad Reciente
+                </div>
+                <div class="card-body">
+                    <!-- Aquí puedes agregar contenido relacionado con la actividad reciente -->
+                    <!-- Por ejemplo: lista de eventos, últimas acciones, etc. -->
+                    <ul>
+                        <li>Evento 1</li>
+                        <li>Evento 2</li>
+                        <li>Evento 3</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 
 </div>

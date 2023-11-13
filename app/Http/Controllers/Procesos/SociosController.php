@@ -49,7 +49,8 @@ class SociosController extends Controller
     public function index()
     {
 
-        $socios = $this->connect()->collection('Socios')->documents();
+        $socios = $this->connect()->collection('Usuarios')->where('Tipo', '=', 'Socio')->documents();
+
         //sacamos lo que necesitamos de socios
         foreach ($socios as $socio) {
             $sociosArray[$socio->id()] = $socio->data();

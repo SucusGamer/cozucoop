@@ -17,20 +17,19 @@
             {{Form::label('unidad', 'Unidad')}}
           </div>
           <div class="form-floating mb-3">
-              {{ Form::select('socio', $usuarios, isset($id) ? $mototaxi['IDSocio'] : null,
+              {{ Form::select('socio', $socios, isset($id) ? $mototaxi['IDSocio'] : null,
               ['class' => 'form-select', 'id' => 'socio', 'placeholder' => 'Seleccione uno', 'autocomplete' => 'off', 'required']) }}
               {{ Form::label('socio', 'Socio') }}
           </div>
             <div class="form-floating mb-3">
-                {{ Form::select('conductor', $usuarios, isset($id) ? $mototaxi['IDConductor'] : null,
+                {{ Form::select('conductor', $conductores, isset($id) ? $mototaxi['IDConductor'] : null,
                 ['class' => 'form-select', 'id' => 'conductor', 'placeholder' => 'Seleccione uno', 'autocomplete' => 'off', 'required']) }}
                 {{ Form::label('conductor', 'Conductor') }}
             </div>
-            {{-- ponemos un select para activo --}}
         <div class="form-floating mb-3">
-            {{ Form::select('activo', [true => 'Si', false => 'No'], isset($id) ? $mototaxi['Activo'] : null,
-            ['class' => 'form-select', 'id' => 'activo', 'placeholder' => 'Seleccione uno', 'autocomplete' => 'off', 'required']) }}
-            {{ Form::label('activo', 'Activo') }}
+          {{Form::select('estatus', [1 => 'Activo', 0 => 'Inactivo'], isset($id) ? $mototaxi['Estatus'] : 1,
+          ['class' => 'form-control', 'id' => 'estatus', 'placeholder' => 'Estatus', 'autocomplete' => 'off', 'required'])}}
+          {{Form::label('estatus', 'Estatus')}}
         </div>
 
       </div>

@@ -44,7 +44,7 @@
                                         <td>{{ $mototaxi['NombreSocio'] }}</td>
                                         <td>{{ $mototaxi['NombreConductor'] }}</td>
                                         <td>
-                                            <i class="fas {{ $mototaxi['Activo'] ? 'fa-check' : 'fa-times' }}"></i>
+                                            <i class="fas {{ $mototaxi['Estatus'] ? 'fa-check' : 'fa-times' }}"></i>
                                         </td>
                                         <td>
                                         <a href="{{ route('mototaxis.edit', ['mototaxi' => $id]) }}" class="btn btn-warning2 btn-sm">Editar</a>

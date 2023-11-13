@@ -26,15 +26,15 @@ class MototaxisController extends Controller
 
     public function index()
     {
-        $mototaxis = $this->connect()->collection('Mototaxis')->documents();
-        $usuarios = $this->selectUsuario();
+        $mototaxisArray = $this->getMototaxisWithUserData();
 
-        $mototaxisArray = $this->mototaxisData($mototaxis, $usuarios);
-        //sacamos lo que necesitamos de mototaxis
+        // dd($mototaxisArray);
+
         return view('page.mototaxis.index')->with([
             'mototaxis' => $mototaxisArray,
         ]);
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -42,10 +42,12 @@ class MototaxisController extends Controller
      */
     public function create()
     {
-        $usuarios = $this->selectUsuarios();
+        $socios = $this->selectSocios();
+        $conductores = $this->selectConductores();
         // dd($numeroMototaxi);
         return view('page.mototaxis.create')->with([
-            'usuarios' => $usuarios,
+            'socios' => $socios,
+            'conductores' => $conductores,
         ]);
     }
 
@@ -58,14 +60,13 @@ class MototaxisController extends Controller
     public function store(Request $request)
     {
         // dd(request()->all());
-        
+
         $conductor = $this->connect()->collection('Mototaxis')->newDocument();
         $conductor->set([
             'Unidad' => $request->unidad,
             'IDConductor' => $request->conductor,
             'IDSocio' => $request->socio,
-            //como viene con 1 o 0, lo convertimos a booleano
-            'Activo' => (bool)$request->activo,
+            'Estatus' => $request->estatus,
         ]);
 
         return redirect()->route('mototaxis.index')->with('message', 'Mototaxi creado correctamente')->with('status', 'success');
@@ -79,7 +80,6 @@ class MototaxisController extends Controller
      */
     public function show($id)
     {
-
     }
 
     /**
@@ -92,10 +92,14 @@ class MototaxisController extends Controller
     {
         $mototaxi = $this->connect()->collection('Mototaxis')->document($id)->snapshot()->data();
         // dd($mototaxi);
-        $usuarios = $this->selectUsuarios();
+        $socios = $this->selectSocios();
+        $conductores = $this->selectConductores();
+
+
         return view('page.mototaxis.edit')->with([
             'mototaxi' => $mototaxi,
-            'usuarios' => $usuarios,
+            'socios' => $socios,
+            'conductores' => $conductores,
             'id' => $id,
         ]);
     }
@@ -115,7 +119,7 @@ class MototaxisController extends Controller
             ['path' => 'Unidad', 'value' => $request->unidad],
             ['path' => 'IDConductor', 'value' => $request->conductor],
             ['path' => 'IDSocio', 'value' => $request->socio],
-            ['path' => 'Activo', 'value' => (bool)$request->activo],
+            ['path' => 'Estatus', 'value' => $request->estatus],
         ]);
 
         return redirect()->route('mototaxis.index')->with('message', 'Mototaxi actualizado correctamente')->with('status', 'success');
@@ -134,59 +138,89 @@ class MototaxisController extends Controller
 
         return redirect()->route('mototaxis.index')->with('message', 'Mototaxi eliminado correctamente')->with('status', 'success');
     }
-    function selectUsuario()
+
+    function selectSocios()
     {
-        $usuarios = $this->connect()->collection('Usuarios')->documents();
-        $usuariosArray = [];
-        foreach ($usuarios as $usuario) {
-            $usuariosArray[$usuario['IDUsuario']] = [
-                'Usuario' => $usuario['Usuario']
-            ];
+        $socios = $this->connect()->collection('Usuarios')->where('Tipo', '=', 'Socio')->documents();
+        $sociosArray = [];
+        foreach ($socios as $socio) {
+            $sociosArray[$socio['IDUsuario']] = $socio['Usuario'];
         }
-        return $usuariosArray;
+        return $sociosArray;
     }
 
-    function selectUsuarios()
+    //hacemos un where para que solo nos muestre los conductores
+    function selectConductores()
     {
-        $usuarios = $this->connect()->collection('Usuarios')->documents();
-        $usuariosArray = [];
-        foreach ($usuarios as $usuario) {
-            $usuariosArray[$usuario['IDUsuario']] = $usuario['Usuario'];
+        $conductores = $this->connect()->collection('Usuarios')->where('Tipo', '=', 'Conductor')->documents();
+        $conductoresArray = [];
+        foreach ($conductores as $conductor) {
+            $conductoresArray[$conductor['IDUsuario']] = $conductor['Usuario'];
         }
-        return $usuariosArray;
+        return $conductoresArray;
     }
 
     //hacemos una función para buscar cuál es el número de mototaxi más alto y así si por ejemplo es 6, el siguiente será el 7
     public function getUnidadMax()
     {
-        try{
+        try {
             $mototaxis = $this->connect()->collection('Mototaxis')->documents();
+
             $mototaxisArray = [];
             foreach ($mototaxis as $mototaxi) {
-                $mototaxisArray[$mototaxi['Unidad']] = $mototaxi['Unidad'];
+                $mototaxisArray[] = $mototaxi['Unidad'];
             }
-            $max = max($mototaxisArray);
-            $UnidadID = $max + 1;
-            
-            return response()->json(['UnidadID' => $UnidadID]);
-            dd($UnidadID);
 
+            // Verificar si hay elementos en el array antes de calcular el máximo
+            if (count($mototaxisArray) > 0) {
+                $max = max($mototaxisArray);
+                $UnidadID = $max + 1;
+            } else {
+                // Si no hay mototaxis, el primer mototaxi será el 1
+                $UnidadID = 1;
+            }
+
+            return response()->json(['UnidadID' => $UnidadID]);
         } catch (\Throwable $th) {
             return response()->json(['error' => $th->getMessage()]);
         }
     }
 
-    function mototaxisData($mototaxis, $usuarios)
+    protected function getMototaxisWithUserData()
     {
-        
-        $mototaxisArray = [];
-        foreach ($mototaxis as $mototaxi) {
-            $mototaxiData = $mototaxi->data();
-            $mototaxiData['NombreSocio'] = $usuarios[$mototaxiData['IDSocio']]['Usuario'];
-            $mototaxiData['NombreConductor'] = $usuarios[$mototaxiData['IDConductor']]['Usuario'];
-            $mototaxisArray[$mototaxi->id()] = $mototaxiData;
-        }
+        $mototaxis = $this->connect()->collection('Mototaxis')->documents();
+        $usuarios = $this->connect()->collection('Usuarios')->documents();
+
+        $usuariosArray = $this->buildUsuariosArray($usuarios);
+        $mototaxisArray = $this->buildMototaxisArray($mototaxis, $usuariosArray);
+
         return $mototaxisArray;
     }
 
+    protected function buildUsuariosArray($usuarios)
+    {
+        $usuariosArray = [];
+
+        foreach ($usuarios as $usuario) {
+            $usuariosArray[$usuario->data()['IDUsuario']] = $usuario->data();
+        }
+
+        return $usuariosArray;
+    }
+
+    protected function buildMototaxisArray($mototaxis, $usuariosArray)
+    {
+        $mototaxisArray = [];
+
+        foreach ($mototaxis as $mototaxi) {
+            $mototaxiData = $mototaxi->data();
+
+            $mototaxiData['NombreSocio'] = $usuariosArray[$mototaxiData['IDSocio']]['Usuario'];
+            $mototaxiData['NombreConductor'] = $usuariosArray[$mototaxiData['IDConductor']]['Usuario'];
+
+            $mototaxisArray[$mototaxi->id()] = $mototaxiData;
+        }
+
+        return $mototaxisArray;
+    }
 }

@@ -30,14 +30,18 @@
                             </div>
 
                             <div class="row mb-3">
-                                <label for="password"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('Contraseña') }}</label>
+                                <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Contraseña') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="password" type="password"
-                                        class="form-control @error('password') is-invalid @enderror" name="password"
-                                        @if(isset($_COOKIE['password'])) value="{{ $_COOKIE['password'] }}" @endif
-                                        required autocomplete="current-password">
+                                    <div class="input-group">
+                                        <input id="password" type="password"
+                                            class="form-control @error('password') is-invalid @enderror" name="password"
+                                            @if(isset($_COOKIE['password'])) value="{{ $_COOKIE['password'] }}" @endif
+                                            required autocomplete="current-password">
+                                        <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                                            <i id="eyeIcon" class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
 
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
@@ -80,43 +84,22 @@
   <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-auth.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script>
-  // Initialize Firebase
-  var firebaseConfig = {
-    apiKey: "AIzaSyCoROKp7nbcXqPP0YtA4fO3sPiVYVyi9pI",
-    authDomain: "laravel-auth-9a60c.firebaseapp.com",
-    projectId: "laravel-auth-9a60c",
-    storageBucket: "laravel-auth-9a60c.appspot.com",
-  messagingSenderId: "969104073456",
-  appId: "1:969104073456:web:5a843163dbf96cb9fd1835"
-  };
-  firebase.initializeApp(config);
-  var facebookProvider = new firebase.auth.FacebookAuthProvider();
-  var googleProvider = new firebase.auth.GoogleAuthProvider();
-  var facebookCallbackLink = '/login/facebook/callback';
-  var googleCallbackLink = '/login/google/callback';
-  async function socialSignin(provider) {
-    var socialProvider = null;
-    if (provider == "facebook") {
-      socialProvider = facebookProvider;
-      document.getElementById('social-login-form').action = facebookCallbackLink;
-    } else if (provider == "google") {
-      socialProvider = googleProvider;
-      document.getElementById('social-login-form').action = googleCallbackLink;
-    } else {
-      return;
-    }
-    firebase.auth().signInWithPopup(socialProvider).then(function(result) {
-      result.user.getIdToken().then(function(result) {
-        document.getElementById('social-login-tokenId').value = result;
-        document.getElementById('social-login-form').submit();
-      });
-    }).catch(function(error) {
-      // do error handling
-      console.log(error);
+<script>
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        var passwordInput = document.getElementById('password');
+        var eyeIcon = document.getElementById('eyeIcon');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            eyeIcon.classList.remove('fa-eye');
+            eyeIcon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            eyeIcon.classList.remove('fa-eye-slash');
+            eyeIcon.classList.add('fa-eye');
+        }
     });
-  }
-  </script>
+</script>
 
 @endsection
 
