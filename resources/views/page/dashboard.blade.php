@@ -38,23 +38,61 @@
             </div>
         @endforeach
 
-        {{-- <canvas id="grafico"></canvas> --}}
+        
     </div>
 
-    <div class="row mt-4">
+    {{-- <div class="row mt-4">
         <div class="col-md-6 offset-md-3">
             <div class="card">
                 <div class="card-header">
                     Resumen de Actividad Reciente
                 </div>
                 <div class="card-body">
-                    <!-- Aquí puedes agregar contenido relacionado con la actividad reciente -->
-                    <!-- Por ejemplo: lista de eventos, últimas acciones, etc. -->
-                    <ul>
-                        <li>Evento 1</li>
-                        <li>Evento 2</li>
-                        <li>Evento 3</li>
-                    </ul>
+                    <canvas id="grafico"></canvas>
+                </div>
+            </div>
+        </div>
+    </div> --}}
+
+    <div class="row mt-4">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-header">
+                    Generar Reporte Diario
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        {!! Form::open([
+                            'route' => 'reporteria.diario',
+                            'method' => 'POST',
+                            'id' => 'formValidate',
+                        ]) !!}
+                        {!! Form::submit('Exportar Excel', ['class' => 'btn btn-info', 'name' => 'action']) !!}
+                        {!! Form::submit('Exportar PDF', ['class' => 'btn btn-danger', 'name' => 'action']) !!}
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-header">
+                    Generar Reporte Mensual
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        {!! Form::open([
+                            'route' => 'reporteria.mensual',
+                            'method' => 'POST',
+                            'id' => 'formValidate',
+                        ]) !!}
+                        {!! Form::submit('Exportar Excel', ['class' => 'btn btn-info', 'name' => 'action']) !!}
+                        {!! Form::submit('Exportar PDF', ['class' => 'btn btn-danger', 'name' => 'action']) !!}
+                        {!! Form::close() !!}
+                    </div>
                 </div>
             </div>
         </div>
@@ -66,41 +104,66 @@
 @push('script')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    var ctx = document.getElementById('grafico').getContext('2d');
+    $.ajax({
+        url: "/dashboard/getInfoTurnos",
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
 
-    var data = @json($informacionUnidades);
+            // Organizar datos para el gráfico
+            const datasets = [];
 
-    var labels = [];
-    var dataValues = [];
+            // Filtrar las unidades para cada tipo de turno
+            const mananaData = data.filter(item => item.Turno === 'Mañana');
+            const tardeData = data.filter(item => item.Turno === 'Tarde');
+            const completoData = data.filter(item => item.Turno === 'Completo');
 
-    for (var conductor in data) {
-        for (var unidad in data[conductor]) {
-            var turnos = data[conductor][unidad].join(', ');
-            labels.push('Conductor ' + conductor + ' - Unidad ' + unidad);
-            dataValues.push(turnos);
-        }
-    }
+            // Crear dataset para cada tipo de turno
+            datasets.push({
+                label: 'Mañana',
+                data: mananaData.map(item => ({ x: 'Mañana', y: item.Unidad })),
+                backgroundColor: 'rgba(255, 99, 132, 0.7)'
+            });
 
-    var chart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Turnos de uso',
-                data: dataValues,
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+            datasets.push({
+                label: 'Tarde',
+                data: tardeData.map(item => ({ x: 'Tarde', y: item.Unidad })),
+                backgroundColor: 'rgba(54, 162, 235, 0.7)'
+            });
+
+            datasets.push({
+                label: 'Completo',
+                data: completoData.map(item => ({ x: 'Completo', y: item.Unidad }))
+                .concat(completoData.map(item => ({ x: 'Completo', y: item.CambioUnidad }))),
+                backgroundColor: 'rgba(75, 192, 192, 0.7)'
+            });
+
+            var ctx = document.getElementById('grafico').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Mañana', 'Tarde', 'Completo'],
+                    datasets: datasets
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Unidad'
+                            }
+                        }
+                    }
                 }
-            }
+            });
+
         }
     });
+
 </script>
+
+
 @endpush
 @stop

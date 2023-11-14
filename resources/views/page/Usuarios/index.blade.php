@@ -42,7 +42,9 @@
                                         <td>{{ $usuario['Usuario'] }}</td>
                                         <td>{{ $usuario['Correo'] }}</td>
                                         <td>{{ isset($usuario['Tipo']) ? $usuario['Tipo'] : 'Sin descripción' }}</td>
-                                        <td>{{ isset($usuario['Estatus']) ? $usuario['Estatus'] : 'Sin descripción' }}</td>
+                                        <td>
+                                            <i class="fas {{ $usuario['Estatus'] ? 'fa-check' : 'fa-times' }}"></i>
+                                        </td>
                                         <td>
                                             <a href="{{ route('usuarios.edit', ['usuario' => $id]) }}"
                                                 class="btn btn-warning2 btn-sm">Editar</a>

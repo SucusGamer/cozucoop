@@ -61,12 +61,13 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('mototaxis.index') }}"
-                                class="nav-link text-white @if (request()->routeIs('mototaxis.index', 'mototaxis.create', 'mototaxis.edit')) active @endif"">
+                            <a href="{{ route('usuarios.index') }}"
+                                class="nav-link text-white @if (request()->routeIs('usuarios.index', 'usuarios.create', 'usuarios.edit'
+                                )) active @endif">
                                 <svg class="bi pe-none me-2" width="16" height="16">
-                                    <use xlink:href="#flow" />
+                                    <use xlink:href="#people-circle" />
                                 </svg>
-                                Mototaxis
+                                Usuarios
                             </a>
                         </li>
                         <li class="nav-item">
@@ -91,22 +92,21 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('usuarios.index') }}"
-                                class="nav-link text-white @if (request()->routeIs('usuarios.index', 'usuarios.create', 'usuarios.edit'
-                                )) active @endif">
+                            <a href="{{ route('mototaxis.index') }}"
+                                class="nav-link text-white @if (request()->routeIs('mototaxis.index', 'mototaxis.create', 'mototaxis.edit')) active @endif"">
                                 <svg class="bi pe-none me-2" width="16" height="16">
-                                    <use xlink:href="#people-circle" />
+                                    <use xlink:href="#flow" />
                                 </svg>
-                                Usuarios
+                                Mototaxis
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('reportes.index') }}"
-                                class="nav-link text-white @if (request()->routeIs('reportes.index', 'reportes.show')) active @endif">
-                                <svg class="bi pe-none me-2" width="16" height="16">
-                                    <use xlink:href="#file" />
-                                </svg>
-                                Reportes
+                            class="nav-link text-white @if (request()->routeIs('reportes.index', 'reportes.show')) active @endif">
+                            <svg class="bi pe-none me-2" width="16" height="16">
+                                <use xlink:href="#file" />
+                            </svg>
+                            Reportes
                             </a>
                         </li>
                     </ul>
