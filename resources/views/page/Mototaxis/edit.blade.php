@@ -6,6 +6,9 @@
 @section('content')
 <div class="container my-4">
   <div class="row">
+    <div class="col-12">
+        {{ Breadcrumbs::render('mototaxis.edit', $id, old('back_to') ?? url()->previous()) }}
+    </div>
     <div class="col-md-12">
       <hr>
       {{-- {{ Breadcrumbs::render() }} --}}
