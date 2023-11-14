@@ -9,8 +9,10 @@ use App\Http\Controllers\Procesos\MovimientosController;
 use App\Http\Controllers\Procesos\ReportesController;
 use App\Http\Controllers\Procesos\SociosController;
 use App\Http\Controllers\Procesos\UsuariosController;
+use App\Http\Controllers\Reportes\ReporteriaController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +38,9 @@ Route::resource('/mototaxis', MototaxisController::class)->names('mototaxis');
 Route::resource('/reportes', ReportesController::class)->names('reportes');
 Route::resource('/usuarios', UsuariosController::class)->names('usuarios');
 Route::resource('/socios', SociosController::class)->names('socios');
+//hacemos una ruta para el index de reporteria
+Route::post('/reporte/diario', [DashboardController::class, 'reporteDiarioAction'])->name('reporteria.diario');
+Route::post('/reporte/mensual', [DashboardController::class, 'reporteMensualAction'])->name('reporteria.mensual');
 });
 
 Route::resource('/password/reset', ResetController::class);
@@ -44,3 +49,6 @@ Route::resource('/perfil', ProfileController::class)->names('perfil')->middlewar
 Route::get('/email/verify', [App\Http\Controllers\Auth\ResetController::class, 'verify_email'])->name('verify')->middleware('fireauth');
 
 Route::get('/mototaxi/getUnidad', [MototaxisController::class, 'getUnidadMax'])->name('mototaxis.getUnidad');
+
+//Apis dashboard
+Route::get('/dashboard/getInfoTurnos', [DashboardController::class, 'getInfoTurnos'])->name('dashboard.getInfoTurnos');

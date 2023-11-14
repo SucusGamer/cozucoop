@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Kreait\Firebase\Factory;
 
 class DashboardController extends Controller
@@ -24,40 +26,140 @@ class DashboardController extends Controller
     public function index()
     {
         $reportes = $this->connect()->collection('Reportes')->documents();
-        $turnos = $this->connect()->collection('Turno')->documents();
         // Obtener la información de usuarios
         $usuarios = $this->selectUsuarios();
         // Obtener fallos activos
         $reportesActivos = $this->getReportes($reportes, $usuarios);
-        $informacionUnidades = [];
 
 
-        $informacionUnidades = [];
-
-        foreach ($turnos as $documento) {
-            $tipo = $documento->data()['Tipo'];
-            $idConductor = $documento->data()['IDConductor'];
-            $unidad = $documento->data()['Unidad'];
-            $turno = $documento->data()['Turno'];
-            $cambioUnidad = $documento->data()['CambioUnidad'] ?? null;
-
-            if ($tipo == 'Salida') {
-                if ($cambioUnidad !== null) {
-                    $informacionUnidades[$idConductor][$unidad][] = $cambioUnidad;
-                } else {
-                    $informacionUnidades[$idConductor][$unidad][] = $unidad;
-                }
-            }
-        }
         // dd($informacionUnidades);
         return view('page.dashboard')->with([
             'reportes' => $reportesActivos,
-            'informacionUnidades' => $informacionUnidades
         ]);
     }
 
+    public function getInfoTurnos(){
+        $turnos = $this->getTurnosWithUserData();
+        $turnosMananaArray = [];
+        $turnosTardeArray = [];
+        $turnosCompletoArray = [];
+        foreach ($turnos as $turno) {
+            if($turno['Turno'] == 'Mañana'){
+                $turnosMananaArray[] = $turno;
+            }elseif($turno['Turno'] == 'Tarde'){
+                $turnosTardeArray[] = $turno;
+            }elseif($turno['Turno'] == 'Completo'){
+                $turnosCompletoArray[] = $turno;
+            }
+        }
+        $turnosUnidadesManana = [];
+        $turnosUnidadesTarde = [];
+        $turnosUnidadesCompleto = [];
+        foreach ($turnosMananaArray as $turno) {
+            $turnosUnidadesManana[] = [
+                'Turno' => $turno['Turno'],
+                'Unidad' => $turno['Unidad'],
+                'Conductor' => $turno['NombreUsuario'],
+            ];
+        }
 
+        //como hay entrada y salida se repiten las unidades entonces se eliminan los repetidos
+        $turnosUnidadesManana = array_unique($turnosUnidadesManana, SORT_REGULAR);
 
+        foreach ($turnosTardeArray as $turno) {
+            $turnosUnidadesTarde[] = [
+                'Turno' => $turno['Turno'],
+                'Unidad' => $turno['Unidad'],
+                'Conductor' => $turno['NombreUsuario'],
+            ];
+        }
+        $turnosUnidadesTarde = array_unique($turnosUnidadesTarde, SORT_REGULAR);
+        foreach ($turnosCompletoArray as $turno) {
+            $turnosUnidadesCompleto[] = [
+                'Turno' => $turno['Turno'],
+                'Unidad' => $turno['Unidad'],
+                'CambioUnidad' => $turno['CambioUnidad'],
+                'Conductor' => $turno['NombreUsuario'],
+            ];
+        }
+
+        $turnosUnidadesCompleto = array_unique($turnosUnidadesCompleto, SORT_REGULAR);
+
+        //ahora juntamos todos en un mismo array, no necesitamos poner el turno porque ya sabemos que es completo
+        $turnosArray = array_merge($turnosUnidadesManana, $turnosUnidadesTarde, $turnosUnidadesCompleto);
+        
+
+        return $turnosArray;
+    }
+
+    public function getTurnosWithUserData()
+    {
+        $turnos = $this->connect()->collection('Turno')->documents();
+        $usuarios = $this->connect()->collection('Usuarios')->documents();
+
+        $usuariosArray =  $this->getUsuariosArray($usuarios);
+        // dd($usuariosArray);
+        $turnosArray = $this->getTurnosArray($turnos, $usuariosArray);
+
+        return $turnosArray;
+    }
+
+    public function getUsuariosArray($usuarios)
+    {
+        $usuariosArray = [];
+
+        foreach ($usuarios as $usuario) {
+            $usuariosArray[$usuario->data()['IDUsuario']] = $usuario->data();
+        }
+
+        return $usuariosArray;
+    }
+
+    public function getTurnosArray($turnos, $usuariosArray)
+    {
+        $turnosArray = [];
+
+        foreach ($turnos as $turno) {
+            $turnoData = $turno->data();
+            $turnoData['NombreUsuario'] = $usuariosArray[$turnoData['IDConductor']]['Usuario'];
+            $turnosArray[] = $turnoData;
+        }
+
+        return $turnosArray;
+    }
+
+    public function reporteDiarioAction(Request $request){
+        // dd($request->all());
+        switch ($request->input('action')) {
+            case 'Exportar Excel':
+                # code...
+                break;
+
+            case 'Exportar PDF':
+                $turnos = $this->getInfoTurnos();
+                $fecha = date('d-m-Y');
+
+                if (empty($turnos)) {
+                    return redirect()->route('dashboard')->with('message', 'No se pudo generar el reporte ya que no hay datos que se puedan generar')->with('status', false);
+                } else {
+                    $logo = public_path('images/logo.png');
+                    //lo pasa a base 64
+
+                    $pdf = PDF::loadView('page.reporteria.reporteDiario', [
+                        'turnos' => $turnos,
+                        'fecha' => $fecha,
+                        'logo' => $logo,
+                    ]);
+
+                    return $pdf->stream();
+                }
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+    }
 
     /**
      * Show the form for creating a new resource.
