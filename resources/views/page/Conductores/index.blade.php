@@ -40,8 +40,10 @@
                                     <td>{{ $conductor['Apellidos'] }}</td>
                                     <td>{{ $conductor['Usuario'] }}</td>
                                     <td>{{ $conductor['Telefono'] }}</td>
-                                    <td> 
-                                        <i class="fas {{ $conductor['Estatus'] ? 'fa-check' : 'fa-times' }}"></i>
+                                    <td>
+                                        <span class="badge {{ $conductor['Estatus'] ? 'bg-success' : 'bg-danger' }}">
+                                            {{ $conductor['Estatus'] ? 'Activo' : 'Inactivo' }}
+                                        </span>
                                     </td>
                                     {{-- <td>
                                         <a href="{{ route('conductores.edit', ['conductore' => $id]) }}" class="btn btn-warning2 btn-sm">Editar</a>
