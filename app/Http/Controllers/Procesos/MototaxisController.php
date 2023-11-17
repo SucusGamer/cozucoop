@@ -63,7 +63,7 @@ class MototaxisController extends Controller
 
         $conductor = $this->connect()->collection('Mototaxis')->newDocument();
         $conductor->set([
-            'Unidad' => $request->unidad,
+            'Unidad' => (int)$request->unidad,
             'IDConductor' => $request->conductor,
             'IDSocio' => $request->socio,
             'Estatus' => $request->estatus,
@@ -116,7 +116,7 @@ class MototaxisController extends Controller
         // dd(request()->activo);
         $mototaxi = $this->connect()->collection('Mototaxis')->document($id);
         $mototaxi->update([
-            ['path' => 'Unidad', 'value' => $request->unidad],
+            ['path' => 'Unidad', 'value' => (int)$request->unidad],
             ['path' => 'IDConductor', 'value' => $request->conductor],
             ['path' => 'IDSocio', 'value' => $request->socio],
             ['path' => 'Estatus', 'value' => $request->estatus],

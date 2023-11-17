@@ -39,7 +39,9 @@
                                         <td>{{ $mototaxi['NombreSocio'] }}</td>
                                         <td>{{ $mototaxi['NombreConductor'] }}</td>
                                         <td>
-                                            <i class="fas {{ $mototaxi['Estatus'] ? 'fa-check' : 'fa-times' }}"></i>
+                                            <span class="badge {{ $mototaxi['Estatus'] ? 'bg-success' : 'bg-danger' }}">
+                                                {{ $mototaxi['Estatus'] ? 'Activo' : 'Inactivo' }}
+                                            </span>
                                         </td>
                                         <td>
                                         <a href="{{ route('mototaxis.edit', ['mototaxi' => $id]) }}" class="btn btn-warning2 btn-sm">Editar</a>

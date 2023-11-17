@@ -3,6 +3,7 @@
 
 @section('extra-js')
 @endsection
+
 @section('content')
     <div class="container my-5">
         <div class="row">
@@ -14,7 +15,7 @@
         <div class="row">
             <div class="col-12 text-center">
                 <h1 class="display-4 mb-4">Gestión de Usuarios</h1>
-                <a href="{{ route('usuarios.create') }}" class="btn btn-primary2">Agregar Nuevo Usuario</a>
+                <a href="{{ route('usuarios.create') }}" class="btn btn-primary">Agregar Nuevo Usuario</a>
             </div>
         </div>
 
@@ -22,7 +23,7 @@
             <div class="col-12">
                 <div class="card border-primary mb-3" style="border-radius: 20px;padding: 10px">
                     <div class="table-responsive">
-                        <table id="sociosTable" class="table table-striped table-hover dataTable">
+                        <table class="table table-striped table-hover">
                             <thead class="bg-primary text-white">
                                 <tr>
                                     <th>NOMBRE</th>
@@ -43,16 +44,18 @@
                                         <td>{{ $usuario['Correo'] }}</td>
                                         <td>{{ isset($usuario['Tipo']) ? $usuario['Tipo'] : 'Sin descripción' }}</td>
                                         <td>
-                                            <i class="fas {{ $usuario['Estatus'] ? 'fa-check' : 'fa-times' }}"></i>
+                                            <span class="badge {{ $usuario['Estatus'] ? 'bg-success' : 'bg-danger' }}">
+                                                {{ $usuario['Estatus'] ? 'Activo' : 'Inactivo' }}
+                                            </span>
                                         </td>
                                         <td>
-                                            <a href="{{ route('usuarios.edit', ['usuario' => $id]) }}"
-                                                class="btn btn-warning2 btn-sm">Editar</a>
-                                            {{-- @if ($usuario['Estatus'] == 1) --}}
-                                            {{Form::open(['route' => ['usuarios.destroy',['usuario' => $id]], 'method' => 'DELETE', 'class' => 'd-inline'])}}
-                                                <button type="submit" class="btn btn-danger2 btn-sm delete">Eliminar</button>
-                                            {{Form::close()}}
-                                            {{-- @endif --}}
+                                            <a href="{{ route('usuarios.edit', ['usuario' => $id]) }}" class="btn btn-warning btn-sm">Editar</a>
+                                            {{-- Solo muestra el botón de eliminar si el usuario está activo --}}
+                                            @if ($usuario['Estatus'] == 1)
+                                                {{ Form::open(['route' => ['usuarios.destroy',['usuario' => $id]], 'method' => 'DELETE', 'class' => 'd-inline']) }}
+                                                    <button type="submit" class="btn btn-danger btn-sm delete">Eliminar</button>
+                                                {{ Form::close() }}
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
@@ -64,16 +67,17 @@
         </div>
     </div>
     @include('include.mensaje')
-    @push('script')
-        <script>
-            $(document).ready(function() {
-                //hacemos la tabla dinamica
-                const tableSocios = jQuery('#sociosTable').DataTable({
-                    "language": {
-                        "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
-                    }
-                });
+@endsection
+
+@push('script')
+    <script>
+        $(document).ready(function() {
+            //hacemos la tabla dinamica
+            const tableSocios = jQuery('table').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+                }
             });
-        </script>
-    @endpush
-@stop
+        });
+    </script>
+@endpush

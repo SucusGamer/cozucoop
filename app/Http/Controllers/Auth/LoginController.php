@@ -63,9 +63,9 @@ class LoginController extends Controller
             $isAdmin = $userDetails->customClaims['admin'] ?? false;
             // dd($isAdmin);
 
-            // if (!$isAdmin) {
-            //     throw ValidationException::withMessages([$this->username() => [trans('auth.not_admin')],]);
-            // }
+            if (!$isAdmin) {
+                throw ValidationException::withMessages([$this->username() => [trans('auth.not_admin')],]);
+            }
 
             // Verificar si el usuario tiene el tipo 'Administrador'
             // $userType = $userDetails->customClaims['tipo'];

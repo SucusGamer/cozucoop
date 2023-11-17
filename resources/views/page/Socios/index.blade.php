@@ -41,7 +41,9 @@
                                         <td>{{ $socio['Usuario'] }}</td>
                                         <td>{{ $socio['Telefono'] }}</td>
                                         <td>
-                                            <i class="fas {{ $socio['Estatus'] ? 'fa-check' : 'fa-times' }}"></i>
+                                            <span class="badge {{ $socio['Estatus'] ? 'bg-success' : 'bg-danger' }}">
+                                                {{ $socio['Estatus'] ? 'Activo' : 'Inactivo' }}
+                                            </span>
                                         </td>
                                         {{-- <td>
                                             <a href="{{ route('socios.edit', ['socio' => $id]) }}" class="btn btn-warning2 btn-sm">Editar</a>
