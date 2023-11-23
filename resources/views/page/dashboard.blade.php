@@ -61,6 +61,36 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    Resumen de Actividad Reciente
+                </div>
+                <div class="card-body">
+                    <canvas id="grafico2"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mt-4">
+            <div class="card">
+                <div class="card-header">
+                    Resumen de Actividad Reciente
+                </div>
+                <div class="card-body">
+                    <canvas id="grafico3"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mt-4">
+            <div class="card">
+                <div class="card-header">
+                    Resumen de Actividad Reciente
+                </div>
+                <div class="card-body">
+                    <canvas id="grafico4"></canvas>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="row mt-4">
@@ -105,78 +135,13 @@
     </div>
 
 
-
+@include('include.mensaje')
 
 </div>
 @push('script')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    $.ajax({
-        url: "/dashboard/getInfoTurnos",
-        type: "GET",
-        dataType: "json",
-        success: function (data) {
-            console.log(data);
+<script src="{{ asset('js/charts.js') }}"></script>
 
-            // Organizar datos para el gráfico
-            const datasets = [];
-
-            // Filtrar las unidades para cada tipo de turno
-            const mananaData = data.filter(item => item.Turno === 'Mañana');
-            const tardeData = data.filter(item => item.Turno === 'Tarde');
-            const completoData = data.filter(item => item.Turno === 'Completo');
-
-            // Crear dataset para cada tipo de turno
-            datasets.push({
-                label: 'Mañana',
-                data: mananaData.map(item => ({ x: 'Mañana', y: item.Unidad })),
-                backgroundColor: 'rgba(255, 99, 132, 0.7)'
-            });
-
-            datasets.push({
-                label: 'Tarde',
-                data: tardeData.map(item => ({ x: 'Tarde', y: item.Unidad })),
-                backgroundColor: 'rgba(54, 162, 235, 0.7)'
-            });
-
-            datasets.push({
-                label: 'Completo',
-                data: completoData.map(item => ({ x: 'Completo', y: item.Unidad }))
-                    .concat(completoData.map(item => ({ x: 'Completo', y: item.CambioUnidad }))),
-                backgroundColor: 'rgba(75, 192, 192, 0.7)'
-            });
-
-            var ctx = document.getElementById('grafico').getContext('2d');
-            var myChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['Mañana', 'Tarde', 'Completo'],
-                    datasets: datasets
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Unidad'
-                            }
-                        }
-                    },
-                    tooltips: {
-                        callbacks: {
-                            label: function (tooltipItem) {
-                                return 'Unidad: ' + tooltipItem.yLabel;
-                            }
-                        }
-                    }
-                }
-            });
-        }
-    });
-
-
-</script>
 
 
 @endpush
