@@ -52,3 +52,5 @@ Route::get('/mototaxi/getUnidad', [MototaxisController::class, 'getUnidadMax'])-
 
 //Apis dashboard
 Route::get('/dashboard/getInfoTurnos', [DashboardController::class, 'getInfoTurnos'])->name('dashboard.getInfoTurnos');
+Route::get('/dashboard/getReporteMensual', [DashboardController::class, 'GenerarReporteMensual'])->name('dashboard.getReporteMensual');
+Route::get('/dashboard/getUsuariosMasActivos', [DashboardController::class, 'ObtenerUsuariosMasActivos'])->name('dashboard.getUsuariosMasActivos');

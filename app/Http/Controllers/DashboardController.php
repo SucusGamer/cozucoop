@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\ReporteDiarioExport;
+use App\Exports\ReporteMensualExport;
 use Carbon\Carbon;
 use PDF;
 use Illuminate\Http\Request;
@@ -29,8 +30,7 @@ class DashboardController extends Controller
     public function index()
     {
         $reportes = $this->connect()->collection('Reportes')->documents();
-        $prueba = $this->calcularInformacionTurnos();
-        dd($prueba);
+
         // Obtener la información de usuarios
         $usuarios = $this->selectUsuarios();
         // Obtener fallos activos
@@ -68,10 +68,7 @@ class DashboardController extends Controller
                 'Conductor' => $turno['NombreUsuario'],
             ];
         }
-
-        //como hay entrada y salida se repiten las unidades entonces se eliminan los repetidos
         $turnosUnidadesManana = array_unique($turnosUnidadesManana, SORT_REGULAR);
-
         foreach ($turnosTardeArray as $turno) {
             $turnosUnidadesTarde[] = [
                 'Turno' => $turno['Turno'],
@@ -88,12 +85,8 @@ class DashboardController extends Controller
                 'Conductor' => $turno['NombreUsuario'],
             ];
         }
-
         $turnosUnidadesCompleto = array_unique($turnosUnidadesCompleto, SORT_REGULAR);
-
-        //ahora juntamos todos en un mismo array, no necesitamos poner el turno porque ya sabemos que es completo
         $turnosArray = array_merge($turnosUnidadesManana, $turnosUnidadesTarde, $turnosUnidadesCompleto);
-
 
         return $turnosArray;
     }
@@ -122,63 +115,135 @@ class DashboardController extends Controller
 
         return $turnosArray;
     }
-    public function calcularInformacionTurnos()
+
+    public function OrdenarTurnos()
     {
         $turnos = $this->getTurnosWithUserDataByMonth();
-        $totalHorasTrabajadas = 0;
-        $turnosTrabajados = [
-            'Mañana' => 0,
-            'Tarde' => 0,
-            'Completo' => 0,
-        ];
+        $turnosSimplificados = [];
 
         foreach ($turnos as $turno) {
-            // Si el turno tiene hora de entrada y salida
-            if (isset($turno['Hora']) && isset($turno['Tipo']) && $turno['Tipo'] === 'Salida') {
-                $horaEntrada = Carbon::createFromFormat('d/m/Y h:iA', $turno['Fecha'] . ' ' . $turno['Hora']);
-                $horaSalida = Carbon::now(); // Establecer la hora actual por defecto si no hay hora de salida
-                $indiceEntrada = array_search($turno, $turnos) - 1;
+            $fecha = $turno['Fecha'];
+            $turnoNombre = $turno['Turno'];
+            $nombreUsuario = $turno['NombreUsuario'];
 
-                // Buscar la entrada correspondiente al mismo usuario y unidad
-                for ($i = $indiceEntrada; $i >= 0; $i--) {
-                    if (
-                        isset($turnos[$i]['Hora'])
-                        && isset($turnos[$i]['Tipo'])
-                        && $turnos[$i]['Tipo'] === 'Entrada'
-                        && $turnos[$i]['IDConductor'] === $turno['IDConductor']
-                        && $turnos[$i]['Unidad'] === $turno['Unidad']
-                    ) {
-                        $horaEntrada = Carbon::createFromFormat('d/m/Y h:iA', $turnos[$i]['Fecha'] . ' ' . $turnos[$i]['Hora']);
-                        break;
-                    }
-                }
+            // Verificar y asignar las estructuras si no existen
+            $turnosSimplificados[$fecha] ??= [];
+            $turnosSimplificados[$fecha][$turnoNombre] ??= [];
+            $turnosSimplificados[$fecha][$turnoNombre][$nombreUsuario] ??= [];
 
-                $horasTrabajadas = $horaEntrada->diffInHours($horaSalida);
-                $totalHorasTrabajadas += $horasTrabajadas;
+            // Agregar la información al usuario en el turno
+            $turnosSimplificados[$fecha][$turnoNombre][$nombreUsuario][] = [
+                'unidad' => $turno['Unidad'],
+                'cambioUnidad' => $turno['CambioUnidad'],
+                'tipo' => $turno['Tipo'],
+                //la hora se guarda en formato 24 horas. Cuando se haga el createFromFormat se debe poner el formato 24 horas
+                'hora' => Carbon::createFromFormat('d/m/Y h:iA', $turno['Fecha'] . ' ' . $turno['Hora'])->format('d/m/Y H:i'),
+            ];
+        }
 
-                // Cuenta los turnos por tipo
-                switch ($turno['Turno']) {
-                    case 'Mañana':
-                        $turnosTrabajados['Mañana']++;
-                        break;
-                    case 'Tarde':
-                        $turnosTrabajados['Tarde']++;
-                        break;
-                    case 'Completo':
-                        $turnosTrabajados['Completo']++;
-                        break;
-                    default:
-                        break;
+        // Ordenar los turnos por entrada y salida
+        foreach ($turnosSimplificados as &$fechaTurnos) {
+            foreach ($fechaTurnos as &$turnoUsuarios) {
+                foreach ($turnoUsuarios as &$usuarioAcciones) {
+                    usort($usuarioAcciones, function ($a, $b) {
+                        if ($a['tipo'] === 'Entrada' && $b['tipo'] === 'Salida') {
+                            return -1; // Entrada antes que salida
+                        } elseif ($a['tipo'] === 'Salida' && $b['tipo'] === 'Entrada') {
+                            return 1; // Salida después de entrada
+                        } else {
+                            return 0; // Misma categoría (Entrada o Salida)
+                        }
+                    });
                 }
             }
         }
 
-        return [
-            'totalHorasTrabajadas' => $totalHorasTrabajadas,
-            'turnosTrabajados' => $turnosTrabajados,
-        ];
+        return $turnosSimplificados;
     }
 
+    public function ObtenerUsuariosMasActivos()
+    {
+        $turnosSimplificados = $this->OrdenarTurnos();
+        $usuariosTurnos = [];
+
+        foreach ($turnosSimplificados as $fecha => $turnos) {
+            foreach ($turnos as $turnoNombre => $usuarios) {
+                foreach ($usuarios as $nombreUsuario => $acciones) {
+                    if (!isset($usuariosTurnos[$nombreUsuario])) {
+                        $usuariosTurnos[$nombreUsuario] = 0;
+                    }
+                    $usuariosTurnos[$nombreUsuario]++;
+                }
+            }
+        }
+
+        arsort($usuariosTurnos); // Ordenar los usuarios por la cantidad de turnos, de mayor a menor
+
+        $topUsuarios = array_slice($usuariosTurnos, 0, 3, true); // Obtener los tres usuarios con más turnos
+        return response()->json($topUsuarios);
+    }
+
+
+    public function GenerarReporteMensual()
+    {
+        $reporte = [
+            'Mensual' => [
+                'TotalHorasTrabajadas' => 0,
+                'TotalTurnos' => 0,
+                'Mañana' => 0,
+                'Tarde' => 0,
+                'Completo' => 0,
+            ],
+        ];
+        $datosTurnos = $this->OrdenarTurnos();
+        foreach ($datosTurnos as $fecha => $turnos) {
+            foreach ($turnos as $turno => $usuarios) {
+                foreach ($usuarios as $usuario => $acciones) {
+                    $entradas = array_filter($acciones, function ($accion) {
+                        return $accion['tipo'] === 'Entrada';
+                    });
+                    $salidas = array_filter($acciones, function ($accion) {
+                        return $accion['tipo'] === 'Salida';
+                    });
+
+                    $horasTrabajadas = 0;
+
+                    if (count($entradas) > 0 && count($salidas) > 0) {
+                        foreach ($entradas as $entrada) {
+                            $horaEntrada = Carbon::createFromFormat('d/m/Y H:i', $entrada['hora']);
+                            foreach ($salidas as $salida) {
+                                $horaSalida = Carbon::createFromFormat('d/m/Y H:i', $salida['hora']);
+                                if ($horaSalida > $horaEntrada) {
+                                    $horasTrabajadas += $horaSalida->diffInMinutes($horaEntrada) / 60;
+                                    $horasTrabajadas = round($horasTrabajadas, 2);
+                                }
+                            }
+                        }
+                    }
+
+                    if ($horasTrabajadas > 0) {
+                        $reporte['Mensual']['TotalHorasTrabajadas'] += $horasTrabajadas;
+                        $reporte['Mensual']['TotalTurnos']++;
+
+                        switch ($turno) {
+                            case 'Mañana':
+                                $reporte['Mensual']['Mañana']++;
+                                break;
+                            case 'Tarde':
+                                $reporte['Mensual']['Tarde']++;
+                                break;
+                            case 'Completo':
+                                $reporte['Mensual']['Completo']++;
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+
+        //lo pasamos en respuesta json
+        return response()->json($reporte);
+    }
 
     public function getUsuariosArray($usuarios)
     {
@@ -217,7 +282,7 @@ class DashboardController extends Controller
                 $fecha = date('d-m-Y');
 
                 if (empty($turnos)) {
-                    return redirect()->route('dashboard')->with('message', 'No se pudo generar el reporte ya que no hay datos que se puedan generar')->with('status', false);
+                    return redirect()->route('dashboard.index')->with('message', 'No se pudo generar el reporte ya que no hay datos que se puedan generar')->with('status', false);
                 } else {
                     $logo = public_path('images/logo.png');
                     //lo pasa a base 64
@@ -238,70 +303,43 @@ class DashboardController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function reporteMensualAction(Request $request)
     {
-        //
-    }
+        // dd($request->all());
+        switch ($request->input('action')) {
+            case 'Exportar Excel':
+                $turnos = new ReporteMensualExport();
+                return Excel::download($turnos, 'ReporteMensual ' . date('d-m-Y') . '.xlsx');
+                break;
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+            case 'Exportar PDF':
+                $turnos = $this->OrdenarTurnos();
+                $fecha = date('d-m-Y');
+                $infoExtra = $this->GenerarReporteMensual()->original; // Obtén el contenido JSON de la respuesta
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+                if (empty($turnos)) {
+                    return redirect()->route('dashboard.index')->with('message', 'No se pudo generar el reporte ya que no hay datos que se puedan generar')->with('status', false);
+                } else {
+                    $logo = public_path('images/logo.png');
+                    //lo pasa a base 64
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+                    $pdf = PDF::loadView('page.reporteria.reporteMensual', [
+                        'datosTurnos' => $turnos,
+                        'fecha' => $fecha,
+                        'logo' => $logo,
+                        'infoExtra' => $infoExtra,
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+                    ]);
+
+                    return $pdf->stream();
+                }
+                break;
+
+            default:
+                # code...
+                break;
+        }
     }
 
     function getReportes($fallos, $usuarios)
