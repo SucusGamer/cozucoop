@@ -50,8 +50,8 @@
         @endif
     </div>
 
-    {{-- <div class="row mt-4">
-        <div class="col-md-6 offset-md-3">
+    <div class="row mt-4">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
                     Resumen de Actividad Reciente
@@ -61,10 +61,10 @@
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div>
 
     <div class="row mt-4">
-        <div class="col-md-6 offset-md-3">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
                     Generar Reporte Diario
@@ -83,10 +83,7 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="row mt-4">
-        <div class="col-md-6 offset-md-3">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
                     Generar Reporte Mensual
@@ -106,6 +103,7 @@
             </div>
         </div>
     </div>
+
 
 
 
@@ -144,7 +142,7 @@
             datasets.push({
                 label: 'Completo',
                 data: completoData.map(item => ({ x: 'Completo', y: item.Unidad }))
-                .concat(completoData.map(item => ({ x: 'Completo', y: item.CambioUnidad }))),
+                    .concat(completoData.map(item => ({ x: 'Completo', y: item.CambioUnidad }))),
                 backgroundColor: 'rgba(75, 192, 192, 0.7)'
             });
 
@@ -164,12 +162,19 @@
                                 text: 'Unidad'
                             }
                         }
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function (tooltipItem) {
+                                return 'Unidad: ' + tooltipItem.yLabel;
+                            }
+                        }
                     }
                 }
             });
-
         }
     });
+
 
 </script>
 

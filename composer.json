@@ -17,6 +17,7 @@
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.2",
         "laravelcollective/html": "^6.4",
+        "maatwebsite/excel": "^3.1",
         "realrashid/sweet-alert": "^7.1",
         "twbs/bootstrap": "5.3.2"
     },

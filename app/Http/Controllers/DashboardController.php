@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ReporteDiarioExport;
+use Carbon\Carbon;
 use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Kreait\Firebase\Factory;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DashboardController extends Controller
 {
@@ -26,6 +29,8 @@ class DashboardController extends Controller
     public function index()
     {
         $reportes = $this->connect()->collection('Reportes')->documents();
+        $prueba = $this->calcularInformacionTurnos();
+        dd($prueba);
         // Obtener la información de usuarios
         $usuarios = $this->selectUsuarios();
         // Obtener fallos activos
@@ -38,17 +43,18 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function getInfoTurnos(){
-        $turnos = $this->getTurnosWithUserData();
+    public function getInfoTurnos()
+    {
+        $turnos = $this->getTurnosWithUserDataByDate();
         $turnosMananaArray = [];
         $turnosTardeArray = [];
         $turnosCompletoArray = [];
         foreach ($turnos as $turno) {
-            if($turno['Turno'] == 'Mañana'){
+            if ($turno['Turno'] == 'Mañana') {
                 $turnosMananaArray[] = $turno;
-            }elseif($turno['Turno'] == 'Tarde'){
+            } elseif ($turno['Turno'] == 'Tarde') {
                 $turnosTardeArray[] = $turno;
-            }elseif($turno['Turno'] == 'Completo'){
+            } elseif ($turno['Turno'] == 'Completo') {
                 $turnosCompletoArray[] = $turno;
             }
         }
@@ -87,22 +93,92 @@ class DashboardController extends Controller
 
         //ahora juntamos todos en un mismo array, no necesitamos poner el turno porque ya sabemos que es completo
         $turnosArray = array_merge($turnosUnidadesManana, $turnosUnidadesTarde, $turnosUnidadesCompleto);
-        
+
 
         return $turnosArray;
     }
 
-    public function getTurnosWithUserData()
+    
+    public function getTurnosWithUserDataByDate()
     {
-        $turnos = $this->connect()->collection('Turno')->documents();
+        $fecha = Carbon::now()->format('d/m/Y');
+        $turnos = $this->connect()->collection('Turno')->where('Fecha', '=', $fecha)->documents();
         $usuarios = $this->connect()->collection('Usuarios')->documents();
-
         $usuariosArray =  $this->getUsuariosArray($usuarios);
-        // dd($usuariosArray);
+        $turnosArray = $this->getTurnosArray($turnos, $usuariosArray);
+        
+        return $turnosArray;
+    }
+    public function getTurnosWithUserDataByMonth()
+    {
+        //y necesitamos saber el primer día del mes y el último
+        $primerDiaMes = Carbon::now()->startOfMonth()->format('d/m/Y');
+        $ultimoDiaMes = Carbon::now()->endOfMonth()->format('d/m/Y');
+        //ahora hacemos la consulta
+        $turnos = $this->connect()->collection('Turno')->where('Fecha', '>=', $primerDiaMes)->where('Fecha', '<=', $ultimoDiaMes)->documents();
+        $usuarios = $this->connect()->collection('Usuarios')->documents();
+        $usuariosArray =  $this->getUsuariosArray($usuarios);
         $turnosArray = $this->getTurnosArray($turnos, $usuariosArray);
 
         return $turnosArray;
     }
+    public function calcularInformacionTurnos()
+    {
+        $turnos = $this->getTurnosWithUserDataByMonth();
+        $totalHorasTrabajadas = 0;
+        $turnosTrabajados = [
+            'Mañana' => 0,
+            'Tarde' => 0,
+            'Completo' => 0,
+        ];
+
+        foreach ($turnos as $turno) {
+            // Si el turno tiene hora de entrada y salida
+            if (isset($turno['Hora']) && isset($turno['Tipo']) && $turno['Tipo'] === 'Salida') {
+                $horaEntrada = Carbon::createFromFormat('d/m/Y h:iA', $turno['Fecha'] . ' ' . $turno['Hora']);
+                $horaSalida = Carbon::now(); // Establecer la hora actual por defecto si no hay hora de salida
+                $indiceEntrada = array_search($turno, $turnos) - 1;
+
+                // Buscar la entrada correspondiente al mismo usuario y unidad
+                for ($i = $indiceEntrada; $i >= 0; $i--) {
+                    if (
+                        isset($turnos[$i]['Hora'])
+                        && isset($turnos[$i]['Tipo'])
+                        && $turnos[$i]['Tipo'] === 'Entrada'
+                        && $turnos[$i]['IDConductor'] === $turno['IDConductor']
+                        && $turnos[$i]['Unidad'] === $turno['Unidad']
+                    ) {
+                        $horaEntrada = Carbon::createFromFormat('d/m/Y h:iA', $turnos[$i]['Fecha'] . ' ' . $turnos[$i]['Hora']);
+                        break;
+                    }
+                }
+
+                $horasTrabajadas = $horaEntrada->diffInHours($horaSalida);
+                $totalHorasTrabajadas += $horasTrabajadas;
+
+                // Cuenta los turnos por tipo
+                switch ($turno['Turno']) {
+                    case 'Mañana':
+                        $turnosTrabajados['Mañana']++;
+                        break;
+                    case 'Tarde':
+                        $turnosTrabajados['Tarde']++;
+                        break;
+                    case 'Completo':
+                        $turnosTrabajados['Completo']++;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        return [
+            'totalHorasTrabajadas' => $totalHorasTrabajadas,
+            'turnosTrabajados' => $turnosTrabajados,
+        ];
+    }
+
 
     public function getUsuariosArray($usuarios)
     {
@@ -124,15 +200,16 @@ class DashboardController extends Controller
             $turnoData['NombreUsuario'] = $usuariosArray[$turnoData['IDConductor']]['Usuario'];
             $turnosArray[] = $turnoData;
         }
-
         return $turnosArray;
     }
 
-    public function reporteDiarioAction(Request $request){
+    public function reporteDiarioAction(Request $request)
+    {
         // dd($request->all());
         switch ($request->input('action')) {
             case 'Exportar Excel':
-                # code...
+                $turnos = new ReporteDiarioExport();
+                return Excel::download($turnos, 'ReporteDiario' . date('d-m-Y') . '.xlsx');
                 break;
 
             case 'Exportar PDF':
@@ -154,7 +231,7 @@ class DashboardController extends Controller
                     return $pdf->stream();
                 }
                 break;
-            
+
             default:
                 # code...
                 break;
@@ -253,5 +330,4 @@ class DashboardController extends Controller
         }
         return $usuariosArray;
     }
-
 }
