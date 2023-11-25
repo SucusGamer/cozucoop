@@ -12,17 +12,14 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-12 text-center">
-                <h1 class="display-4 mb-4">Gestión de Usuarios</h1>
-                <a href="{{ route('usuarios.create') }}" class="btn btn-primary">Agregar Nuevo Usuario</a>
-            </div>
-        </div>
-
         <div class="row mt-4">
             <div class="col-12">
-                <div class="card border-primary mb-3" style="border-radius: 20px;padding: 10px">
-                    <div class="table-responsive">
+                <div class="card border-primary mb-3" style="border-radius: 20px">
+                    <div class="text-center">
+                        <h1 class="display-4 mb-4">Gestión de Usuarios</h1>
+                        <a href="{{ route('usuarios.create') }}" class="btn btn-primary" style="color: white;font-weight: bold;">Agregar Nuevo Usuario</a>
+                    </div>
+                    <div class="table-responsive" style="padding:4px">
                         <table class="table table-striped table-hover">
                             <thead class="bg-primary text-white">
                                 <tr>
@@ -49,11 +46,11 @@
                                             </span>
                                         </td>
                                         <td>
-                                            <a href="{{ route('usuarios.edit', ['usuario' => $id]) }}" class="btn btn-warning btn-sm">Editar</a>
+                                            <a href="{{ route('usuarios.edit', ['usuario' => $id]) }}" class="btn btn-warning btn-sm" style="font-weight: bold;">Editar</a>
                                             {{-- Solo muestra el botón de eliminar si el usuario está activo --}}
                                             @if ($usuario['Estatus'] == 1)
                                                 {{ Form::open(['route' => ['usuarios.destroy',['usuario' => $id]], 'method' => 'DELETE', 'class' => 'd-inline']) }}
-                                                    <button type="submit" class="btn btn-danger btn-sm delete">Eliminar</button>
+                                                    <button type="submit" class="btn btn-danger btn-sm delete" style="font-weight: bold;">Eliminar</button>
                                                 {{ Form::close() }}
                                             @endif
                                         </td>

@@ -14,21 +14,21 @@
         </div>
       </div>
       <hr>
-      
+
       {{-- {{ Breadcrumbs::render('notaries.show', $notary) }} --}}
-      
+
       <div class="row">
         <div class="col-md-12">
             <div class="d-grid gap-2 d-md-block">
                 @if ($reporte['Activo'])
                 {{ Form::open(['route' => ['reportes.update',['reporte' => $id]], 'method' => 'PUT']) }}
-                  <button type="submit" class="btn btn-primary2 editado">Revisado</button>
+                  <button type="submit" class="btn btn-warning" style="color: white">Revisado</button>
                 {{ Form::close() }}
                 @endif
             </div>
         </div>
       </div>
-      
+
       <div class="row">
         <div class="col-md-12 my-4">
             <table class="table table-bordered table-striped table-hover">
@@ -65,7 +65,7 @@
             </table>
         </div>
       </div>
-      
+
     </div>
 </div>
 </div>

@@ -41,7 +41,7 @@
         @include('layouts.sidebar.sidebar')
         <section>
             <main class="d-flex flex-nowrap">
-                <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark">
+                <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="height: 100vh">
                     <a href="/"
                         class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                         <svg class="bi pe-none me-2" width="40" height="32">
@@ -62,8 +62,7 @@
                         </li>
                         <li>
                             <a href="{{ route('usuarios.index') }}"
-                                class="nav-link text-white @if (request()->routeIs('usuarios.index', 'usuarios.create', 'usuarios.edit'
-                                )) active @endif">
+                                class="nav-link text-white @if (request()->routeIs('usuarios.index', 'usuarios.create', 'usuarios.edit')) active @endif">
                                 <svg class="bi pe-none me-2" width="16" height="16">
                                     <use xlink:href="#people-circle" />
                                 </svg>
@@ -72,7 +71,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('socios.index') }}"
-                                class="nav-link text-white 
+                                class="nav-link text-white
                                 @if (request()->routeIs('socios.index', 'socios.create', 'socios.edit')) active @endif"
                                 aria-current="page">
                                 <svg class="bi pe-none me-2" width="16" height="16">
@@ -102,11 +101,11 @@
                         </li>
                         <li>
                             <a href="{{ route('reportes.index') }}"
-                            class="nav-link text-white @if (request()->routeIs('reportes.index', 'reportes.show')) active @endif">
-                            <svg class="bi pe-none me-2" width="16" height="16">
-                                <use xlink:href="#file" />
-                            </svg>
-                            Reportes
+                                class="nav-link text-white @if (request()->routeIs('reportes.index', 'reportes.show')) active @endif">
+                                <svg class="bi pe-none me-2" width="16" height="16">
+                                    <use xlink:href="#file" />
+                                </svg>
+                                Reportes
                             </a>
                         </li>
                     </ul>
@@ -121,6 +120,18 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
                             <li><a class="dropdown-item"href="{{ route('perfil.index') }}">Perfil</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li id="themeToggle">
+                                <button type="button" class="dropdown-item d-flex align-items-center"
+                                    data-bs-theme-value="dark" aria-pressed="true">
+                                    <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em">
+                                        <use href="#moon-stars-fill"></use>
+                                    </svg>
+                                    Modo Oscuro
+                                </button>
+                            </li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -174,6 +185,46 @@
                 <div></div>
             </div>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const themeToggle = document.getElementById('themeToggle');
+                const themeButton = themeToggle.querySelector('.dropdown-item');
+                const themeIcon = themeButton.querySelector('.bi');
+
+                themeButton.addEventListener('click', function() {
+                    const currentTheme = themeButton.getAttribute('data-bs-theme-value');
+                    if (currentTheme === 'light') {
+                        themeIcon.setAttribute('href', '#moon-stars-fill');
+                        themeButton.setAttribute('data-bs-theme-value', 'dark');
+                        themeButton.innerHTML = `
+                            <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em">
+                                <use href="#moon-stars-fill"></use>
+                            </svg>
+                            Modo Oscuro
+                        `;
+                    } else {
+                        themeIcon.setAttribute('href', '#sun-fill');
+                        themeButton.setAttribute('data-bs-theme-value', 'light');
+                        themeButton.innerHTML = `
+                            <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em">
+                                <use href="#sun-fill"></use>
+                            </svg>
+                            Modo Claro
+                        `;
+                    }
+                });
+
+                themeIcon.setAttribute('href', '#moon-stars-fill');
+                themeButton.setAttribute('data-bs-theme-value', 'dark');
+                themeButton.innerHTML = `
+                    <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em">
+                        <use href="#moon-stars-fill"></use>
+                    </svg>
+                    Modo Oscuro
+                `;
+            });
+        </script>
+
         <script src="{{ asset('js/sidebar.js') }}"></script>
         {{-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script> --}}
         <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>

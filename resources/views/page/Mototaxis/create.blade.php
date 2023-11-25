@@ -16,7 +16,7 @@
       {{Form::open(['route' => 'mototaxis.store', 'method' => 'POST'])}}
         @include('page.mototaxis.form')
         <div class="text-center mb-3">
-          <button type="submit" class="btn btn-primary2">Crear Mototaxi</button>
+          <button type="submit" class="btn btn-primary">Crear Mototaxi</button>
         </div>
       {{Form::close()}}
     </div>

@@ -18,7 +18,7 @@
         {{ Form::open(['route' => ['usuarios.update',['usuario' => $id]], 'method' => 'PUT', 'id' => 'basicForm']) }}
         @include('page.usuarios.form')
         <div class="text-center mb-3">
-          <button type="submit" class="btn btn-primary enviar">Actualizar Socio</button>
+          <button type="submit" class="btn btn-warning enviar" style="font-weight: bold;">Actualizar Socio</button>
         </div>
       {{Form::close()}}
     </div>

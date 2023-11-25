@@ -11,16 +11,13 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-12 text-center">
-                <h1 class="display-4 mb-4">Gestión de Socios</h1>
-                {{-- <a href="{{ route('socios.create') }}" class="btn btn-primary2">Agregar Nuevo Socio</a> --}}
-            </div>
-        </div>
-
         <div class="row mt-4">
             <div class="col-12">
-                <div class="card border-primary mb-3" style="border-radius: 20px;padding: 10px">
+                <div class="card border-primary mb-3" style="border-radius: 20px;padding: 4px">
+                    <div class="col-12 text-center">
+                        <h1 class="display-4 mb-4">Gestión de Socios</h1>
+                        {{-- <a href="{{ route('socios.create') }}" class="btn btn-primary2">Agregar Nuevo Socio</a> --}}
+                    </div>
                     <div class="table-responsive">
                         <table id="sociosTable" class="table table-striped table-hover dataTable">
                             <thead class="bg-primary text-white">

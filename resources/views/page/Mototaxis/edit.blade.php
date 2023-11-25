@@ -15,7 +15,7 @@
         {{ Form::open(['route' => ['mototaxis.update',['mototaxi' => $id]], 'method' => 'PUT']) }}
         @include('page.mototaxis.form')
         <div class="text-center mb-3">
-          <button type="submit" class="btn btn-primary2">Actualizar Mototaxi</button>
+          <button type="submit" class="btn btn-warning" style="font-weight: bold;">Actualizar Mototaxi</button>
         </div>
       {{Form::close()}}
     </div>

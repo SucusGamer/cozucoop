@@ -26,16 +26,16 @@
     @endif
 
     <div class="row justify-content-center mt-4">
-        <div class="col-lg-4">
+        <div class="col-4">
             <h4 class="mb-4">Información de Perfil</h4>
-            <p class="text-justify mb-3">
+            <p class="text-justify">
                 Actualiza la información de perfil y la dirección de correo electrónico de tu cuenta.
                 Cuando cambies tu correo electrónico, necesitarás verificarlo para evitar que la cuenta se bloquee.
             </p>
         </div>
 
-        <div class="col-lg-8 text-center pt-0">
-            <div class="card py-4 mb-5 mt-md-3 rounded shadow-lg">
+        <div class="col-8 text-center pt-0">
+            <div class="card py-4 mb-5 mt-md-3 shadow-lg border-light" style="border-radius: 20px">
                 {!! Form::model($user, ['method'=>'PATCH', 'action'=> ['App\Http\Controllers\Auth\ProfileController@update',$user->uid]]) !!}
 
                 <div class="form-group px-3 mb-3">
@@ -48,7 +48,7 @@
 
                 <div class="form-group row mb-0 me-4">
                     <div class="col-md-8 offset-md-4 text-end">
-                        {!! Form::submit('Guardar', ['class'=>'btn btn-primary2']) !!}
+                        {!! Form::submit('Guardar', ['class'=>'btn btn-primary']) !!}
                     </div>
                 </div>
 
@@ -68,9 +68,9 @@
         </div>
 
         <div class="col-lg-8 text-center pt-0">
-            <div class="card py-4 mb-5 mt-md-3 rounded shadow-lg">
+            <div class="card py-4 mb-5 mt-md-3 shadow-lg border-light" style="border-radius: 20px">
                 {!! Form::open() !!}
-                <div class="form-group px-3 mb-3">
+                <div class="form-group px-3 mb-3 col">
                     {!! Form::label('new_password', 'Nueva Contraseña:', ['class' => 'form-label text-start']) !!}
                     {!! Form::password('new_password', ['class'=>'form-control'])!!}
                 </div>
@@ -82,7 +82,7 @@
 
                 <div class="form-group row mb-0 me-4">
                     <div class="col-md-8 offset-md-4 text-end">
-                        {!! Form::submit('Guardar', ['class'=>'btn btn-primary2']) !!}
+                        {!! Form::submit('Guardar', ['class'=>'btn btn-primary']) !!}
                     </div>
                 </div>
                 {!! Form::close() !!}
@@ -101,14 +101,14 @@
         </div>
 
         <div class="col-lg-8 pt-0">
-            <div class="card py-4 mb-5 mt-md-3 rounded shadow-lg">
+            <div class="card py-4 mb-5 mt-md-3 shadow-lg border-light" style="border-radius: 20px">
                 <div class="text-left px-3">
                     Una vez que tu cuenta sea eliminada, todos sus recursos y datos serán eliminados de forma permanente. Antes de eliminar tu cuenta, por favor descarga cualquier dato o información que desees conservar.
                 </div>
                 {!! Form::open(['method'=>'DELETE', 'action' =>['App\Http\Controllers\Auth\ProfileController@destroy',$user->uid]]) !!}
                 <div class="form-group row mb-0 mr-4 pt-4 px-3">
-                    <div class="col-md-8 offset-md-4 text-start">
-                        {!! Form::submit('Eliminar Cuenta', ['class'=>'btn btn-danger2 pl-3']) !!}
+                    <div class="col-md-8 offset-md-4 text-end">
+                        {!! Form::submit('Eliminar Cuenta', ['class'=>'btn btn-danger pl-3']) !!}
                     </div>
                 </div>
                 {!! Form::close() !!}

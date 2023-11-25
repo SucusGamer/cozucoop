@@ -3,9 +3,9 @@
 @section('content')
     <div class="container">
         <div class="d-flex justify-content-center align-items-center" style="min-height: 94vh;">
-            <div class="col-md-8">
-                <div class="card border-info mb-3" style="border-radius: 15px">
-                    <div class="card-header" style="font-size: 30px;text-align: center">{{ __('Inicio de Sesión') }}</div>
+            <div class="col-md-6">
+                <div class="card border-primary mb-3" style="border-radius: 20px">
+                    <div class="card-header bg-transparent border-primary" style="font-size: 30px;text-align: center">{{ __('Inicio de Sesión') }}</div>
 
                     <div class="card-body">
                         <form method="POST" action="{{ route('login') }}">
@@ -66,7 +66,7 @@
 
                             <div class="row mb-0">
                                 <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-primary2">
+                                    <button type="submit" class="btn btn-primary" style="font-weight: bold">
                                         {{ __('Acceder') }}
                                     </button>
 

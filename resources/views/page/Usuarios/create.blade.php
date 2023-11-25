@@ -16,7 +16,7 @@
       {{Form::open(['route' => 'usuarios.store','id' => 'basicForm', 'method' => 'POST'])}}
         @include('page.usuarios.form')
         <div class="text-center mb-3">
-          <button type="submit" class="btn btn-primary2 enviar">Crear Usuario</button>
+          <button type="submit" class="btn btn-primary enviar" style="color: white;font-weight: bold;">Crear Usuario</button>
         </div>
       {{Form::close()}}
     </div>

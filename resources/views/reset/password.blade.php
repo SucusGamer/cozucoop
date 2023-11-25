@@ -6,8 +6,8 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header bg-primary text-white">Restablecer contraseña</div>
+            <div class="card border-warning mb-3" style="border-radius:20px">
+                <div class="card-header bg-transparent border-warning">Restablecer contraseña</div>
                 <div class="card-body">
 
                     @if(Session::has('message'))
@@ -41,7 +41,7 @@
                     </div>
 
                     <div class="d-grid gap-2 mt-4">
-                        {!! Form::submit('Enviar correo', ['class'=>'btn btn-primary btn-block']) !!}
+                        {!! Form::submit('Enviar correo', ['class'=>'btn btn-warning btn-block']) !!}
                     </div>
 
                     {!! Form::close() !!}
