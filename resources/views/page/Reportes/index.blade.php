@@ -40,7 +40,9 @@
                                         <td>{{ $reporte['TipoReporte'] }}</td>
                                         <td>{{ $reporte['Fecha'] }}</td>
                                         <td>
-                                            <i class="fas {{ $reporte['Activo'] ? 'fa-check' : 'fa-times' }}"></i>
+                                            <span class="badge {{ $reporte['Activo'] ? 'bg-success' : 'bg-danger' }}">
+                                                {{ $reporte['Activo'] ? 'Activo' : 'Inactivo' }}
+                                            </span>
                                         </td>
                                         <td>
                                             {{-- <a href="{{ route('reportes.edit', ['reporte' => $id]) }}" class="btn btn-warning2 btn-sm">Editar</a> --}}
