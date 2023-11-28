@@ -52,8 +52,8 @@
 
     <div class="row mt-4">
         <div class="col-md-6">
-            <div class="card border-light mb-3" style="border-radius: 20px">
-                <div class="card-header bg-transparent border-light" style="text-align: center">
+            <div class="card borde mb-3" style="border-radius: 20px">
+                <div class="card-header bg-transparent borde2" style="text-align: center">
                     Resumen de Actividad Reciente
                 </div>
                 <div class="card-body">
@@ -62,8 +62,8 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="card border-light mb-3" style="border-radius: 20px">
-                <div class="card-header bg-transparent border-light" style="text-align: center">
+            <div class="card borde mb-3" style="border-radius: 20px">
+                <div class="card-header bg-transparent borde2" style="text-align: center">
                     Resumen de Actividad Reciente
                 </div>
                 <div class="card-body">
@@ -72,8 +72,8 @@
             </div>
         </div>
         <div class="col-md-6 mt-4">
-            <div class="card border-light mb-3" style="border-radius: 20px">
-                <div class="card-header bg-transparent border-light" style="text-align: center">
+            <div class="card borde mb-3" style="border-radius: 20px">
+                <div class="card-header bg-transparent borde2" style="text-align: center">
                     Resumen de Actividad Reciente
                 </div>
                 <div class="card-body">
@@ -82,8 +82,8 @@
             </div>
         </div>
         <div class="col-md-6 mt-4">
-            <div class="card border-light mb-3" style="border-radius: 20px">
-                <div class="card-header bg-transparent border-light" style="text-align: center">
+            <div class="card borde mb-3" style="border-radius: 20px">
+                <div class="card-header bg-transparent borde2" style="text-align: center">
                     Resumen de Actividad Reciente
                 </div>
                 <div class="card-body">
@@ -95,8 +95,8 @@
 
     <div class="row mt-4">
         <div class="col-md-6">
-            <div class="card border-light mb-3" style="border-radius: 20px">
-                <div class="card-header bg-transparent border-light" style="text-align: center">
+            <div class="card borde mb-3" style="border-radius: 20px">
+                <div class="card-header bg-transparent borde2" style="text-align: center">
                     Generar Reporte Diario
                 </div>
                 <div class="card-body">
@@ -114,8 +114,8 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="card border-light mb-3" style="border-radius: 20px">
-                <div class="card-header bg-transparent border-light" style="text-align: center">
+            <div class="card borde mb-3" style="border-radius: 20px">
+                <div class="card-header bg-transparent borde2" style="text-align: center">
                     Generar Reporte Mensual
                 </div>
                 <div class="card-body">

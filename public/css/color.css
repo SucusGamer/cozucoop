@@ -1,0 +1,15 @@
+[data-bs-theme=light] .borde {
+  border-color: black; /* Color del borde para el tema claro */
+}
+
+[data-bs-theme=dark] .borde {
+  border-color: white; /* Color del borde para el tema oscuro */
+}
+
+[data-bs-theme=light] .borde2 {
+  border-color: black; /* Color del borde para el tema claro */
+}
+
+[data-bs-theme=dark] .borde2 {
+  border-color: white; /* Color del borde para el tema oscuro */
+}

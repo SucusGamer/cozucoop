@@ -9,6 +9,8 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/color.css') }}">
+
     <link rel="stylesheet" href="{{ asset('css/Botonesnuevos.css') }}">
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -50,6 +52,9 @@
                         <span class="fs-4">Cozucoop</span>
                     </a>
                     <hr>
+                    <div>
+                        @include('layouts.color-select.select-theme')
+                    </div>
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li>
                             <a href="{{ route('dashboard.index') }}"
@@ -123,18 +128,6 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li id="themeToggle">
-                                <button type="button" class="dropdown-item d-flex align-items-center"
-                                    data-bs-theme-value="dark" aria-pressed="true">
-                                    <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em">
-                                        <use href="#moon-stars-fill"></use>
-                                    </svg>
-                                    Modo Oscuro
-                                </button>
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
                             <li><a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();">Salir</a>
@@ -144,6 +137,8 @@
                             </li>
                         </ul>
                     </div>
+
+
                 </div>
 
 
@@ -153,7 +148,6 @@
                 @yield('content') {{-- renderizamos la vista seleccionada por el usuario --}}
 
             </main>
-            @include('layouts.color-select.select-theme')
         </section>
 
         <div class="lds-spinner2" id="loading" style="display: none">
@@ -185,45 +179,6 @@
                 <div></div>
             </div>
         </div>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const themeToggle = document.getElementById('themeToggle');
-                const themeButton = themeToggle.querySelector('.dropdown-item');
-                const themeIcon = themeButton.querySelector('.bi');
-
-                themeButton.addEventListener('click', function() {
-                    const currentTheme = themeButton.getAttribute('data-bs-theme-value');
-                    if (currentTheme === 'light') {
-                        themeIcon.setAttribute('href', '#moon-stars-fill');
-                        themeButton.setAttribute('data-bs-theme-value', 'dark');
-                        themeButton.innerHTML = `
-                            <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em">
-                                <use href="#moon-stars-fill"></use>
-                            </svg>
-                            Modo Oscuro
-                        `;
-                    } else {
-                        themeIcon.setAttribute('href', '#sun-fill');
-                        themeButton.setAttribute('data-bs-theme-value', 'light');
-                        themeButton.innerHTML = `
-                            <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em">
-                                <use href="#sun-fill"></use>
-                            </svg>
-                            Modo Claro
-                        `;
-                    }
-                });
-
-                themeIcon.setAttribute('href', '#moon-stars-fill');
-                themeButton.setAttribute('data-bs-theme-value', 'dark');
-                themeButton.innerHTML = `
-                    <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em">
-                        <use href="#moon-stars-fill"></use>
-                    </svg>
-                    Modo Oscuro
-                `;
-            });
-        </script>
 
         <script src="{{ asset('js/sidebar.js') }}"></script>
         {{-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script> --}}
