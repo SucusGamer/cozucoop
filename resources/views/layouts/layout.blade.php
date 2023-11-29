@@ -31,7 +31,7 @@
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/ldrs/dist/auto/reuleaux.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/ldrs/dist/auto/infinity.js"></script>
-
+    <link rel="icon" href="{{ asset('images/logo.png') }}">
 
 </head>
 
