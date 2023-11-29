@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 
 @section('content')
-<div class="container">
+<div class="container texto-sombra fade-in">
     @if(Session::has('message'))
         <div class="alert alert-info alert-dismissible fade show mt-4" role="alert">
             {{ Session::get('message') }}
@@ -35,7 +35,7 @@
         </div>
 
         <div class="col-8 text-center pt-0">
-            <div class="card py-4 mb-5 mt-md-3 shadow-lg border-light" style="border-radius: 20px">
+            <div class="card py-4 mb-5 mt-md-3 shadow-lg borde">
                 {!! Form::model($user, ['method'=>'PATCH', 'action'=> ['App\Http\Controllers\Auth\ProfileController@update',$user->uid]]) !!}
 
                 <div class="form-group px-3 mb-3">
@@ -68,7 +68,7 @@
         </div>
 
         <div class="col-lg-8 text-center pt-0">
-            <div class="card py-4 mb-5 mt-md-3 shadow-lg border-light" style="border-radius: 20px">
+            <div class="card py-4 mb-5 mt-md-3 shadow-lg borde" style="border-radius: 20px">
                 {!! Form::open() !!}
                 <div class="form-group px-3 mb-3 col">
                     {!! Form::label('new_password', 'Nueva Contraseña:', ['class' => 'form-label text-start']) !!}
@@ -101,7 +101,7 @@
         </div>
 
         <div class="col-lg-8 pt-0">
-            <div class="card py-4 mb-5 mt-md-3 shadow-lg border-light" style="border-radius: 20px">
+            <div class="card py-4 mb-5 mt-md-3 shadow-lg borde" style="border-radius: 20px">
                 <div class="text-left px-3">
                     Una vez que tu cuenta sea eliminada, todos sus recursos y datos serán eliminados de forma permanente. Antes de eliminar tu cuenta, por favor descarga cualquier dato o información que desees conservar.
                 </div>
