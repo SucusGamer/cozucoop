@@ -4,7 +4,7 @@
 @section('extra-js')
 @endsection
 @section('content')
-    <div class="container my-5">
+    <div class="container my-5 texto-sombra fade-in">
         <div class="row">
             <div class="col-12">
                 {{ Breadcrumbs::render() }}

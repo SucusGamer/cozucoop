@@ -16,10 +16,10 @@
             <div class="col-12">
                 <div class="card border-primary mb-3" style="border-radius: 20px">
                     <div class="text-center">
-                        <h1 class="display-4 mb-4">Gestión de Usuarios</h1>
-                        <a href="{{ route('usuarios.create') }}" class="btn btn-primary" style="color: white;font-weight: bold;">Agregar Nuevo Usuario</a>
+                        <h1 class="display-4 mb-4 texto-sombra fade-in">Gestión de Usuarios</h1>
+                        <a href="{{ route('usuarios.create') }}" class="btn btn-primary texto-sombra fade-in" style="color: white;font-weight: bold;">Agregar Nuevo Usuario</a>
                     </div>
-                    <div class="table-responsive" style="padding:4px">
+                    <div class="table-responsive fade-in" style="padding:4px">
                         <table class="table table-striped table-hover">
                             <thead class="bg-primary text-white">
                                 <tr>

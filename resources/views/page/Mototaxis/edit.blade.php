@@ -4,7 +4,7 @@
 
 @endsection
 @section('content')
-<div class="container my-4">
+<div class="container my-4 texto-sombra fade-in">
   <div class="row">
     <div class="col-12">
         {{ Breadcrumbs::render('mototaxis.edit', $id, old('back_to') ?? url()->previous()) }}

@@ -4,7 +4,7 @@
 
 @endsection
 @section('content')
-<div class="container my-4">
+<div class="container my-4 texto-sombra fade-in">
     <div class="row justify-content-center">
         <div class="col-11">
 

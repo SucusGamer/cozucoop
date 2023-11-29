@@ -3,16 +3,16 @@
 @section('title', 'Inicio')
 
 @section('content')
-<div class="container">
+<div class="container fade-in"">
     <div class="row">
         <div class="col-12 mt-2">
-            <h1 class="text-center">BIENVENIDO</h1>
+            <h1 class="text-center texto-sombra fade-in">BIENVENIDO</h1>
         </div>
     </div>
 
     <div class="row mt-4">
         <div class="col-12 mb-4">
-            <h2 class="text-center">Actividades</h2>
+            <h2 class="text-center texto-sombra fade-in">Actividades</h2>
         </div>
 
         @if(count($reportes) > 0)
@@ -40,7 +40,7 @@
             @endforeach
         @else
             <div class="col-md-12 mb-4">
-                <div class="card border-light mb-3" style="border-radius: 20px">
+                <div class="card border-light mb-3 gradiente-oscuro" style="border-radius: 20px">
                     <div class="card-header bg-transparent border-light" style="text-align: center">
                         <h5 class="card-title">Todo en orden</h5>
                         <p class="card-text">No hay reportes disponibles en este momento.</p>
@@ -52,7 +52,7 @@
 
     <div class="row mt-4">
         <div class="col-md-6">
-            <div class="card borde mb-3" style="border-radius: 20px">
+            <div class="card borde mb-3 gradiente-oscuro" style="border-radius: 20px">
                 <div class="card-header bg-transparent borde2" style="text-align: center">
                     Resumen de Actividad Reciente
                 </div>
@@ -62,7 +62,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="card borde mb-3" style="border-radius: 20px">
+            <div class="card borde mb-3 gradiente-oscuro" style="border-radius: 20px">
                 <div class="card-header bg-transparent borde2" style="text-align: center">
                     Resumen de Actividad Reciente
                 </div>
@@ -72,7 +72,7 @@
             </div>
         </div>
         <div class="col-md-6 mt-4">
-            <div class="card borde mb-3" style="border-radius: 20px">
+            <div class="card borde mb-3 gradiente-oscuro" style="border-radius: 20px">
                 <div class="card-header bg-transparent borde2" style="text-align: center">
                     Resumen de Actividad Reciente
                 </div>
@@ -82,7 +82,7 @@
             </div>
         </div>
         <div class="col-md-6 mt-4">
-            <div class="card borde mb-3" style="border-radius: 20px">
+            <div class="card borde mb-3 gradiente-oscuro" style="border-radius: 20px">
                 <div class="card-header bg-transparent borde2" style="text-align: center">
                     Resumen de Actividad Reciente
                 </div>
@@ -95,7 +95,7 @@
 
     <div class="row mt-4">
         <div class="col-md-6">
-            <div class="card borde mb-3" style="border-radius: 20px">
+            <div class="card borde mb-3 gradiente-oscuro" style="border-radius: 20px">
                 <div class="card-header bg-transparent borde2" style="text-align: center">
                     Generar Reporte Diario
                 </div>
@@ -114,7 +114,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="card borde mb-3" style="border-radius: 20px">
+            <div class="card borde mb-3 gradiente-oscuro" style="border-radius: 20px">
                 <div class="card-header bg-transparent borde2" style="text-align: center">
                     Generar Reporte Mensual
                 </div>

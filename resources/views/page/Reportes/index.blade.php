@@ -4,14 +4,14 @@
 @section('extra-js')
 @endsection
 @section('content')
-    <div class="container my-5">
+    <div class="container my-5 texto-sombra fade-in">
         <div class="row">
             <div class="col-12">
                 {{ Breadcrumbs::render() }}
             </div>
         </div>
 
-        <div class="row mt-4">
+        <div class="row mt-4 texto-sombra fade-in">
             <div class="col-12">
                 <div class="card border-primary mb-3" style="border-radius: 20px;padding: 4px">
                     <div class="col-12 text-center">

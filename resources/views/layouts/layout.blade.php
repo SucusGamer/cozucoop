@@ -29,6 +29,9 @@
     <!-- Fontawesome icons -->
     <script src="{{ asset('js/fontawesome/js/all.js') }}"></script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/ldrs/dist/auto/reuleaux.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/ldrs/dist/auto/infinity.js"></script>
+
 
 </head>
 
@@ -41,6 +44,7 @@
         </div>
     @else
         @include('layouts.sidebar.sidebar')
+        
         <section>
             <main class="d-flex flex-nowrap">
                 <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="height: 100vh">
@@ -151,33 +155,26 @@
         </section>
 
         <div class="lds-spinner2" id="loading" style="display: none">
-            <div class="lds-spinner">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
+            <l-infinity
+              size="100"
+              stroke="4"
+              stroke-length="0.15"
+              bg-opacity="0.1"
+              speed="1.3"
+              color="white" 
+            ></l-infinity>
         </div>
 
+
         <div class="lds-roller" id="loader" style="display: none">
-            <div class="lds-roller2">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
+            <l-infinity
+              size="100"
+              stroke="4"
+              stroke-length="0.15"
+              bg-opacity="0.1"
+              speed="1.3"
+              color="white" 
+            ></l-infinity>
         </div>
 
         <script src="{{ asset('js/sidebar.js') }}"></script>
