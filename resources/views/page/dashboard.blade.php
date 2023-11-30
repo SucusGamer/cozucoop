@@ -40,8 +40,8 @@
             @endforeach
         @else
             <div class="col-md-12 mb-4">
-                <div class="card border-light mb-3 gradiente-oscuro" style="border-radius: 20px">
-                    <div class="card-header bg-transparent border-light" style="text-align: center">
+                <div class="card borde mb-3 gradiente-oscuro" style="border-radius: 20px">
+                    <div class="card-header bg-transparent" style="text-align: center">
                         <h5 class="card-title">Todo en orden</h5>
                         <p class="card-text">No hay reportes disponibles en este momento.</p>
                     </div>
@@ -125,8 +125,29 @@
                             'method' => 'POST',
                             'id' => 'formValidate',
                         ]) !!}
-                        {!! Form::submit('Exportar Excel', ['class' => 'btn btn-info', 'name' => 'action']) !!}
-                        {!! Form::submit('Exportar PDF', ['class' => 'btn btn-danger', 'name' => 'action']) !!}
+                        <div class="row">
+                            <div class="col-md-12 mb-4">
+                                {{-- hacemos un select con los meses del año --}}
+                                {!! Form::select('mes', [
+                                    '1' => 'Enero',
+                                    '2' => 'Febrero',
+                                    '3' => 'Marzo',
+                                    '4' => 'Abril',
+                                    '5' => 'Mayo',
+                                    '6' => 'Junio',
+                                    '7' => 'Julio',
+                                    '8' => 'Agosto',
+                                    '9' => 'Septiembre',
+                                    '10' => 'Octubre',
+                                    '11' => 'Noviembre',
+                                    '12' => 'Diciembre',
+                                ], null, ['class' => 'form-control', 'placeholder' => 'Seleccione un mes', 'required']) !!}
+                            </div>
+                            <div class="col-md-12">
+                                {!! Form::submit('Exportar Excel', ['class' => 'btn btn-info', 'name' => 'action']) !!}
+                                {!! Form::submit('Exportar PDF', ['class' => 'btn btn-danger', 'name' => 'action']) !!}
+                            </div>
+                        </div>
                         {!! Form::close() !!}
                     </div>
                 </div>

@@ -67,7 +67,6 @@ $.ajax({
     type: "GET",
     dataType: "json",
     success: function (data) {
-        console.log(data);
         const reporte = data; // Suponiendo que la respuesta contiene el objeto $reporte con los datos
 
         const ctx = document.getElementById('grafico2').getContext('2d');

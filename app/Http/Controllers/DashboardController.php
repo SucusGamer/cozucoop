@@ -91,7 +91,7 @@ class DashboardController extends Controller
         return $turnosArray;
     }
 
-    
+
     public function getTurnosWithUserDataByDate()
     {
         $fecha = Carbon::now()->format('d/m/Y');
@@ -99,16 +99,25 @@ class DashboardController extends Controller
         $usuarios = $this->connect()->collection('Usuarios')->documents();
         $usuariosArray =  $this->getUsuariosArray($usuarios);
         $turnosArray = $this->getTurnosArray($turnos, $usuariosArray);
-        
+
         return $turnosArray;
     }
-    public function getTurnosWithUserDataByMonth()
+    public function getTurnosWithUserDataByMonth($mes = null)
     {
-        //y necesitamos saber el primer día del mes y el último
-        $primerDiaMes = Carbon::now()->startOfMonth()->format('d/m/Y');
-        $ultimoDiaMes = Carbon::now()->endOfMonth()->format('d/m/Y');
-        //ahora hacemos la consulta
-        $turnos = $this->connect()->collection('Turno')->where('Fecha', '>=', $primerDiaMes)->where('Fecha', '<=', $ultimoDiaMes)->documents();
+        // Obtener el primer y último día del mes en base a $mes
+        $mes = $mes ?? Carbon::now()->format('m');
+        $primerDiaMes = Carbon::createFromFormat('m', $mes)->startOfMonth();
+        $ultimoDiaMes = Carbon::createFromFormat('m', $mes)->endOfMonth();
+        
+        $primerDiaMesFormat = $primerDiaMes->format('d/m/Y');
+        $ultimoDiaMesFormat = $ultimoDiaMes->format('d/m/Y');
+        //no se como se hace un where entre fechas en firestore así que lo hago con un where y un foreach
+        $turnos = $this->connect()->collection('Turno')
+            ->where('Fecha', '>=', $primerDiaMesFormat)
+            ->where('Fecha', '<=', $ultimoDiaMesFormat)
+            ->documents();
+
+        dd($turnos);
         $usuarios = $this->connect()->collection('Usuarios')->documents();
         $usuariosArray =  $this->getUsuariosArray($usuarios);
         $turnosArray = $this->getTurnosArray($turnos, $usuariosArray);
@@ -116,9 +125,10 @@ class DashboardController extends Controller
         return $turnosArray;
     }
 
-    public function OrdenarTurnos()
+    public function OrdenarTurnos($mes = null)
     {
-        $turnos = $this->getTurnosWithUserDataByMonth();
+        // dd($mes);
+        $turnos = $this->getTurnosWithUserDataByMonth($mes);
         $turnosSimplificados = [];
 
         foreach ($turnos as $turno) {
@@ -313,7 +323,9 @@ class DashboardController extends Controller
                 break;
 
             case 'Exportar PDF':
-                $turnos = $this->OrdenarTurnos();
+                $mes = $request->input('mes');
+                $turnos = $this->OrdenarTurnos($mes);
+                // dd($turnos);
                 $fecha = date('d-m-Y');
                 $infoExtra = $this->GenerarReporteMensual()->original; // Obtén el contenido JSON de la respuesta
 

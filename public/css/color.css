@@ -1,64 +1,112 @@
+/* Estilos base comunes */
+.borde,
+.borde2 {
+  transition: all 0.3s ease; /* Transición suave para bordes */
+}
+
+.btn,
+.card,
+.gradiente,
+.table,
+.table-striped tbody tr:nth-of-type(odd),
+.table thead,
+.table-hover tbody tr:hover,
+.lds-spinner2 l-infinity {
+  transition: all 0.3s ease; /* Transición suave para otros elementos */
+}
+
 /* Estilos para el tema claro */
-[data-bs-theme=light] .borde,
-[data-bs-theme=light] .borde2 {
-  border-color: #ccc; /* Color del borde para el tema claro */
-  background-color: #f9f9f9; /* Fondo claro */
-  color: #333; /* Texto oscuro */
+[data-bs-theme=light] {
+  .borde,
+  .borde2 {
+    border-color: #ccc;
+    background-color: #f9f9f9;
+    color: #333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  }
+
+  .gradiente {
+    background-image: linear-gradient(135deg, #f9f9f9, #eaeaea);
+  }
+
+  .table {
+    color: #333333;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  }
+
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.02); /* Fondo más sutil */
+  }
+
+  .table thead {
+    background-color: #f5f5f5;
+    color: #333333;
+  }
+
+  .lds-spinner2 l-infinity {
+    color: #333333;
+  }
+
+  .fade-in {
+    animation: fadeIn ease-in 0.6s;
+  }
 }
 
 /* Estilos para el tema oscuro */
+[data-bs-theme=dark] {
+  .borde,
+  .borde2 {
+    border-color: #666;
+    background-color: #222;
+    color: #eee;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Sombra más definida */
+  }
+
+  .gradiente {
+    background-image: linear-gradient(135deg, #222, #111);
+  }
+
+  .table {
+    color: #eeeeee;
+    background-color: #222222;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Sombra más definida */
+  }
+
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(255, 255, 255, 0.02); /* Fondo más sutil */
+  }
+
+  .table thead {
+    background-color: #f5f5f5;
+    color: #333333;
+  }
+
+  .lds-spinner2 l-infinity {
+    color: #eeeeee;
+  }
+
+  .fade-in {
+    animation: fadeIn ease-in 0.6s;
+  }
+}
+
+/* Animación de cambio para el tema oscuro */
 [data-bs-theme=dark] .borde,
-[data-bs-theme=dark] .borde2 {
-  border-color: #666; /* Color del borde para el tema oscuro */
-  background-color: #222; /* Fondo oscuro */
-  color: #eee; /* Texto claro */
+[data-bs-theme=dark] .borde2,
+[data-bs-theme=dark] .btn,
+[data-bs-theme=dark] .card,
+[data-bs-theme=dark] .gradiente,
+[data-bs-theme=dark] .table,
+[data-bs-theme=dark] .table-striped tbody tr:nth-of-type(odd),
+[data-bs-theme=dark] .table thead,
+[data-bs-theme=dark] .table-hover tbody tr:hover,
+[data-bs-theme=dark] .lds-spinner2 l-infinity {
+  transition: all 0.3s ease;
+  animation: fadeIn ease-in 0.6s;
 }
 
-/* Estilos para los botones */
-.btn {
-  border-radius: 8px; /* Bordes redondeados */
-  padding: 8px 16px; /* Espaciado interno */
-  transition: all 0.3s ease; /* Transición suave */
-}
-
-/* Hover para los botones */
-.btn:hover {
-  filter: brightness(110%); /* Aumenta el brillo al pasar el mouse */
-}
-
-/* Estilos para las tarjetas */
-.card {
-  border-radius: 20px; /* Bordes redondeados */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
-  transition: all 0.3s ease; /* Transición suave */
-}
-
-/* Hover para las tarjetas */
-.card:hover {
-  transform: translateY(-5px); /* Efecto de elevación al pasar el mouse */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada */
-}
-
-/* Tema Claro */
-[data-bs-theme=light] .gradiente-claro {
-  background-image: linear-gradient(135deg, #f9f9f9, #eaeaea); /* Gradiente para fondo claro */
-}
-
-/* Tema Oscuro */
-[data-bs-theme=dark] .gradiente-oscuro {
-  background-image: linear-gradient(135deg, #222, #111); /* Gradiente para fondo oscuro */
-}
-
-/* Sombras para texto */
-.texto-sombra {
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Sombra suave para texto */
-}
-
-/* Animación de opacidad */
-.fade-in {
-  animation: fadeIn ease-in 0.6s; /* Animación de opacidad */
-}
-
+/* Animación de opacidad para el tema oscuro */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -66,41 +114,4 @@
   to {
     opacity: 1;
   }
-}
-/* Estilos para el tema claro */
-[data-bs-theme=light] .table {
-  color: #333333; /* Color del texto en modo claro */
-  background-color: #ffffff; /* Fondo de la tabla en modo claro */
-}
-
-/* Estilos para el tema oscuro */
-[data-bs-theme=dark] .table {
-  color: #eeeeee; /* Color del texto en modo oscuro */
-  background-color: #222222; /* Fondo de la tabla en modo oscuro */
-}
-
-/* Estilos para las filas impares */
-.table-striped tbody tr:nth-of-type(odd) {
-  background-color: rgba(0, 0, 0, 0.05); /* Fondo de las filas impares */
-}
-
-/* Estilos para la cabecera */
-.table thead {
-  background-color: #f5f5f5; /* Fondo de la cabecera */
-  color: #333333; /* Color del texto de la cabecera */
-}
-
-/* Hover para las filas */
-.table-hover tbody tr:hover {
-  background-color: rgba(0, 0, 0, 0.075); /* Cambio de color al pasar el mouse sobre las filas */
-}
-
-/* Estilos para el tema claro */
-[data-bs-theme=light] .lds-spinner2 l-infinity {
-  color: #333333; /* Color del spinner en modo claro */
-}
-
-/* Estilos para el tema oscuro */
-[data-bs-theme=dark] .lds-spinner2 l-infinity {
-  color: #eeeeee; /* Color del spinner en modo oscuro */
 }

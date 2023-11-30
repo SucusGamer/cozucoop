@@ -57,7 +57,6 @@
                     </a>
                     <hr>
                     <div>
-                        @include('layouts.color-select.select-theme')
                     </div>
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li>
@@ -89,15 +88,15 @@
                                 Socios
                             </a>
                         </li>
-
+                        
                         <li>
                             <a href="{{ route('conductores.index') }}"
-                                class="nav-link text-white @if (request()->routeIs('conductores.index', 'conductores.create', 'conductores.edit')) active @endif"">
-                                <svg class="bi pe-none me-2" width="16" height="16">
-                                    <use xlink:href="#drivers" />
-                                </svg>
-                                Conductores
-                            </a>
+                            class="nav-link text-white @if (request()->routeIs('conductores.index', 'conductores.create', 'conductores.edit')) active @endif"">
+                            <svg class="bi pe-none me-2" width="16" height="16">
+                                <use xlink:href="#drivers" />
+                            </svg>
+                            Conductores
+                        </a>
                         </li>
                         <li>
                             <a href="{{ route('mototaxis.index') }}"
@@ -110,10 +109,10 @@
                         </li>
                         <li>
                             <a href="{{ route('reportes.index') }}"
-                                class="nav-link text-white @if (request()->routeIs('reportes.index', 'reportes.show')) active @endif">
-                                <svg class="bi pe-none me-2" width="16" height="16">
-                                    <use xlink:href="#file" />
-                                </svg>
+                            class="nav-link text-white @if (request()->routeIs('reportes.index', 'reportes.show')) active @endif">
+                            <svg class="bi pe-none me-2" width="16" height="16">
+                                <use xlink:href="#file" />
+                            </svg>
                                 Reportes
                             </a>
                         </li>
@@ -121,11 +120,11 @@
                     <hr>
                     <div class="dropdown">
                         <a href="#"
-                            class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                        class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="https://github.com/mdo.png" alt="" width="32" height="32"
                                 class="rounded-circle me-2">
-                            <strong>{{ auth()->user()->displayName }}</strong>
+                                <strong>{{ auth()->user()->displayName }}</strong>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
                             <li><a class="dropdown-item"href="{{ route('perfil.index') }}">Perfil</a></li>
@@ -133,7 +132,7 @@
                                 <hr class="dropdown-divider">
                             </li>
                             <li><a class="dropdown-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
+                                onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();">Salir</a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
@@ -141,16 +140,17 @@
                             </li>
                         </ul>
                     </div>
-
-
+                    
+                    
                 </div>
 
 
-
+                
                 <div class="b-example-divider b-example-vr"></div>
-
+                
                 @yield('content') {{-- renderizamos la vista seleccionada por el usuario --}}
-
+                @include('layouts.color-select.select-theme')
+                
             </main>
         </section>
 
