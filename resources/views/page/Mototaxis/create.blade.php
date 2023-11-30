@@ -13,10 +13,10 @@
     <div class="col-md-12">
       <hr>
       {{-- {{ Breadcrumbs::render() }} --}}
-      {{Form::open(['route' => 'mototaxis.store', 'method' => 'POST'])}}
+      {{Form::open(['route' => 'mototaxis.store','id' => 'basicForm', 'method' => 'POST'])}}
         @include('page.mototaxis.form')
         <div class="text-center mb-3">
-          <button type="submit" class="btn btn-primary">Crear Mototaxi</button>
+          <button type="submit" class="btn btn-primary enviar">Crear Mototaxi</button>
         </div>
       {{Form::close()}}
     </div>

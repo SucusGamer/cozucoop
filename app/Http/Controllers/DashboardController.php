@@ -109,18 +109,19 @@ class DashboardController extends Controller
         $primerDiaMes = Carbon::createFromFormat('m', $mes)->startOfMonth();
         $ultimoDiaMes = Carbon::createFromFormat('m', $mes)->endOfMonth();
         
-        $primerDiaMesFormat = $primerDiaMes->format('d/m/Y');
-        $ultimoDiaMesFormat = $ultimoDiaMes->format('d/m/Y');
+        $primerDiaMesFormat = $primerDiaMes->format('Y-m-d');
+        $ultimoDiaMesFormat = $ultimoDiaMes->format('Y-m-d');
         //no se como se hace un where entre fechas en firestore así que lo hago con un where y un foreach
-        $turnos = $this->connect()->collection('Turno')
-            ->where('Fecha', '>=', $primerDiaMesFormat)
-            ->where('Fecha', '<=', $ultimoDiaMesFormat)
-            ->documents();
+        $turnos = $this->connect()->collection('Turno')->documents();
 
-        dd($turnos);
         $usuarios = $this->connect()->collection('Usuarios')->documents();
         $usuariosArray =  $this->getUsuariosArray($usuarios);
         $turnosArray = $this->getTurnosArray($turnos, $usuariosArray);
+        $turnosArray = array_filter($turnosArray, function ($turno) use ($primerDiaMesFormat, $ultimoDiaMesFormat) {
+            $fechaTurno = Carbon::createFromFormat('Y-m-d', $turno['Fecha']);
+            return $fechaTurno->between($primerDiaMesFormat, $ultimoDiaMesFormat);
+        });
+        
 
         return $turnosArray;
     }
@@ -147,7 +148,7 @@ class DashboardController extends Controller
                 'cambioUnidad' => $turno['CambioUnidad'],
                 'tipo' => $turno['Tipo'],
                 //la hora se guarda en formato 24 horas. Cuando se haga el createFromFormat se debe poner el formato 24 horas
-                'hora' => Carbon::createFromFormat('d/m/Y h:iA', $turno['Fecha'] . ' ' . $turno['Hora'])->format('d/m/Y H:i'),
+                'hora' => Carbon::createFromFormat('Y-m-d h:iA', $turno['Fecha'] . ' ' . $turno['Hora'])->format('d/m/Y H:i'),
             ];
         }
 
@@ -273,6 +274,8 @@ class DashboardController extends Controller
         foreach ($turnos as $turno) {
             $turnoData = $turno->data();
             $turnoData['NombreUsuario'] = $usuariosArray[$turnoData['IDConductor']]['Usuario'];
+           
+            $turnoData['Fecha'] = Carbon::createFromFormat('d/m/Y', $turnoData['Fecha'])->format('Y-m-d');
             $turnosArray[] = $turnoData;
         }
         return $turnosArray;
@@ -284,6 +287,11 @@ class DashboardController extends Controller
         switch ($request->input('action')) {
             case 'Exportar Excel':
                 $turnos = new ReporteDiarioExport();
+                
+                //si no hay datos que exportar redirige al dashboard con un mensaje de error
+                if ($this->getInfoTurnos() == null) {
+                    return redirect()->route('dashboard.index')->with('message', 'No se pudo generar el reporte ya que no hay datos que se puedan generar')->with('status', false);
+                }
                 return Excel::download($turnos, 'ReporteDiario' . date('d-m-Y') . '.xlsx');
                 break;
 
@@ -318,7 +326,15 @@ class DashboardController extends Controller
         // dd($request->all());
         switch ($request->input('action')) {
             case 'Exportar Excel':
-                $turnos = new ReporteMensualExport();
+                $mes = $request->input('mes');
+                $turnos = new ReporteMensualExport($mes);
+                // Verifica si hay datos para exportar a Excel
+                if ($this->OrdenarTurnos($mes) == null) {
+                    return redirect()->route('dashboard.index')
+                        ->with('message', 'No se pudo generar el reporte ya que no hay datos que se puedan generar')
+                        ->with('status', false);
+                }
+                
                 return Excel::download($turnos, 'ReporteMensual ' . date('d-m-Y') . '.xlsx');
                 break;
 

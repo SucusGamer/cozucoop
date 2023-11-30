@@ -21,6 +21,7 @@ class ReporteDiarioExport implements FromView, ShouldAutoSize, WithStyles
         //obtenemos los reportes
         $turnos = $dashboard->getInfoTurnos();
         $fecha = date('d-m-Y');
+        
 
         return view('exports.reporteDiario', [
             'reportes' => $turnos,

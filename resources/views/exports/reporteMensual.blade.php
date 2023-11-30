@@ -8,12 +8,19 @@
         </td>
     </tr>
 </table>
-
+@php
+    // Obtener las fechas y ordenarlas
+    $fechasOrdenadas = array_keys($datosTurnos);
+    sort($fechasOrdenadas);
+@endphp
 <table class="articulos-table" style="width: 100%; border-collapse: collapse;">
     @php
         $prevFecha = null;
     @endphp
-    @foreach ($datosTurnos as $fecha => $turnos)
+        @foreach ($fechasOrdenadas as $fecha)
+        @php
+            $turnos = $datosTurnos[$fecha];
+        @endphp
         <tr style="font-weight: bold;">
             <td colspan="5" style="text-align: center; padding: 5px; margin-top: 0px;">
                 {{ $fecha }}

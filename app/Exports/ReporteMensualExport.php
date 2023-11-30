@@ -14,13 +14,21 @@ class ReporteMensualExport implements FromView, ShouldAutoSize, WithStyles
     /**
     * @return \Illuminate\Support\Collection
     */
+    public $mes;
+
+    public function __construct($mes)
+    {
+        $this->mes = $mes;
+    }
     public function view(): View
     {
         //llamamos al controlador de Dashboard
         $dashboard = new DashboardController();
         //obtenemos los reportes
-        $turnos = $dashboard->OrdenarTurnos();
-        $fecha = date('d-m-Y');
+        $turnos = $dashboard->OrdenarTurnos($this->mes);
+        
+        //si no hay datos que mostrar
+        $fecha = date('d/m/Y');
         $infoExtra = $dashboard->GenerarReporteMensual()->original; // Obtén el contenido JSON de la respuesta
 
 

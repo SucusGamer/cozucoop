@@ -36,7 +36,9 @@
     </div>
   </div>
 </div>
+@push('script')
+{{-- aqui van mis scripts --}}
+<script src="{{ asset('js/procesos/mototaxis.js') }}"></script>
 
-
-
+@endpush
 &nbsp;

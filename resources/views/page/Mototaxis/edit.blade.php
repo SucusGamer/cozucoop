@@ -12,10 +12,10 @@
     <div class="col-md-12">
       <hr>
       {{-- {{ Breadcrumbs::render() }} --}}
-        {{ Form::open(['route' => ['mototaxis.update',['mototaxi' => $id]], 'method' => 'PUT']) }}
+        {{ Form::open(['route' => ['mototaxis.update',['mototaxi' => $id]], 'method' => 'PUT', 'id' => 'basicForm']) }}
         @include('page.mototaxis.form')
         <div class="text-center mb-3">
-          <button type="submit" class="btn btn-warning" style="font-weight: bold;">Actualizar Mototaxi</button>
+          <button type="submit" class="btn btn-warning enviar" style="font-weight: bold;">Actualizar Mototaxi</button>
         </div>
       {{Form::close()}}
     </div>

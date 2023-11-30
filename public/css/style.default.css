@@ -238,3 +238,53 @@
     transform: translateY(-10px) scale(1.06);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
 }
+
+/*actualmente el scrollbar esta muy grande, por eso se pone el width en 10px*/
+/* width */
+
+/* Estilos para el scrollbar */
+::-webkit-scrollbar {
+    width: 6px; /* Ancho del scrollbar */
+}
+
+/* Track (la barra donde se desplaza el thumb) */
+::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Color de fondo del track */
+}
+
+/* Thumb (el "botón" deslizante del scrollbar) */
+::-webkit-scrollbar-thumb {
+    background: #bbb; /* Color del thumb */
+    border-radius: 6px; /* Borde redondeado del thumb */
+    border: 2px solid #f1f1f1; /* Borde del thumb */
+}
+
+/* Cambia el color del thumb al pasar el mouse sobre él */
+::-webkit-scrollbar-thumb:hover {
+    background: #999;
+}
+
+/* Opcional: Cambia el color del thumb al estar activo (clic sostenido) */
+::-webkit-scrollbar-thumb:active {
+    background: #777;
+}
+
+/* Mostrar el scrollbar solo cuando se esté desplazando */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+/* Mostrar el scrollbar cuando se pasa el mouse sobre él */
+::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
+}
